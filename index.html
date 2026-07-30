@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenCLE — The Recap | Show. Know.</title>
+<meta name="description" content="OpenCLE — Cleveland's AI Open Mic. An exclusive leave-behind for the community that showed up. Hosted at Sora with Futureland, Sora, and For Granted.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tilt+Neon&family=Shippori+Mincho:wght@400;500;600&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0d;
+    --bg-2: #101014;
+    --panel: #141419;
+    --ink: #f2f0ee;
+    --ink-dim: #b9b5b0;
+    --pink: #ff3d9e;
+    --pink-soft: #ffc7dd;
+    --green: #8dff6a;
+    --green-soft: #c9ffb8;
+    --white-neon: #ffffff;
+    --gold: #ffd27a;
+    --water-1: #0c1a1e;
+    --water-2: #0f2a2b;
+    --serif: 'Shippori Mincho', 'Times New Roman', serif;
+    --sans: 'Zen Kaku Gothic New', 'Helvetica Neue', Arial, sans-serif;
+    --neonfont: 'Tilt Neon', 'Zen Kaku Gothic New', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+  ::selection { background: var(--pink); color: #0a0a0d; }
+
+  a { color: var(--pink-soft); }
+
+  /* ============ subtle background texture ============ */
+  .bg-grid {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 30%, transparent 90%);
+    -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 30%, transparent 90%);
+  }
+
+  main { position: relative; z-index: 1; }
+
+  /* ============ HERO / NEON SIGNS ============ */
+  .hero {
+    min-height: 92vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 9vh 20px 4vh;
+    position: relative;
+  }
+  .hero-kicker {
+    font-family: var(--sans);
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    color: var(--ink-dim);
+    margin-bottom: 3.2rem;
+    font-weight: 500;
+  }
+  .hero-kicker .dot { color: var(--pink); }
+
+  .neon {
+    font-family: var(--neonfont);
+    text-decoration: none;
+    display: inline-block;
+    line-height: 1.1;
+    transition: transform 0.35s ease;
+  }
+  .neon:hover { transform: scale(1.03); }
+
+  .neon-main {
+    font-size: clamp(4rem, 13vw, 9.5rem);
+    color: #fff;
+    letter-spacing: 0.02em;
+    text-shadow:
+      0 0 4px  #fff,
+      0 0 11px #fff,
+      0 0 24px var(--pink),
+      0 0 52px var(--pink),
+      0 0 92px var(--pink),
+      0 0 150px var(--pink);
+    animation: flicker-a 8s linear infinite;
+  }
+
+  .neon-recap {
+    margin-top: 1.1rem;
+    font-family: var(--neonfont);
+    font-size: clamp(1.25rem, 3.2vw, 2rem);
+    letter-spacing: 0.34em;
+    text-indent: 0.34em;
+    color: #fff0f6;
+    text-shadow: 0 0 3px #fff0f6, 0 0 10px var(--pink), 0 0 26px var(--pink), 0 0 54px var(--pink);
+    animation: flicker-b 8.6s linear infinite;
+    animation-delay: 0.9s;
+  }
+  .neon-sub {
+    margin-top: 1.5rem;
+    font-family: var(--serif);
+    font-size: clamp(0.6rem, 1.9vw, 1.05rem);
+    letter-spacing: 0.16em;
+    text-indent: 0.16em;
+    white-space: nowrap;
+    color: var(--green-soft);
+    text-shadow: 0 0 8px var(--green), 0 0 22px var(--green);
+    animation: flicker-c 11s linear infinite;
+  }
+
+  .neon-row {
+    margin-top: 4.6rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: start;
+    gap: clamp(1.2rem, 4vw, 3rem);
+    width: min(1100px, 100%);
+  }
+  .neon-row .neon-small { text-align: center; justify-self: center; }
+  .neon-small {
+    font-size: clamp(1.35rem, 3.4vw, 2.1rem);
+    letter-spacing: 0.06em;
+  }
+  .neon-small .sign-tag {
+    display: block;
+    font-family: var(--sans);
+    font-size: 0.62rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    text-shadow: none;
+    margin-top: 0.5rem;
+    animation: none;
+  }
+  .neon-green {
+    color: #eaffe2;
+    text-shadow: 0 0 3px #eaffe2, 0 0 10px var(--green), 0 0 26px var(--green), 0 0 54px var(--green);
+    animation: flicker-b 7.3s linear infinite;
+  }
+  .neon-pink {
+    color: #fff0f6;
+    text-shadow: 0 0 3px #fff0f6, 0 0 10px var(--pink), 0 0 26px var(--pink), 0 0 54px var(--pink);
+    animation: flicker-c 9.1s linear infinite;
+  }
+  .neon-gold {
+    color: #fff6e3;
+    text-shadow: 0 0 3px #fff6e3, 0 0 10px var(--gold), 0 0 26px var(--gold), 0 0 54px #d9a13c;
+    animation: flicker-b 10.4s linear infinite;
+    animation-delay: 1.7s;
+  }
+
+  @keyframes flicker-a {
+    0%, 6.9%, 7.4%, 20%, 48%, 48.6%, 49.1%, 100% { opacity: 1; }
+    7%, 7.2% { opacity: 0.55; }
+    48.2%, 48.9% { opacity: 0.7; }
+    73% { opacity: 0.93; }
+  }
+  @keyframes flicker-b {
+    0%, 12%, 12.6%, 40%, 40.5%, 78%, 100% { opacity: 1; }
+    12.2%, 12.4% { opacity: 0.5; }
+    40.2% { opacity: 0.72; }
+    78.3%, 78.6% { opacity: 0.85; }
+  }
+  @keyframes flicker-c {
+    0%, 27%, 27.6%, 61%, 61.7%, 90%, 100% { opacity: 1; }
+    27.2% { opacity: 0.6; }
+    61.2%, 61.5% { opacity: 0.78; }
+    90.3% { opacity: 0.9; }
+  }
+
+  .hero-meta {
+    margin-top: 4.4rem;
+    color: var(--ink-dim);
+    font-size: 0.9rem;
+    letter-spacing: 0.14em;
+  }
+  .hero-meta strong { color: var(--ink); font-weight: 500; }
+  .hero-meta .sep { color: var(--pink); margin: 0 0.7em; }
+
+  /* drifting hero petals (very subtle) */
+  .hero-petal {
+    position: absolute; top: -4vh;
+    font-size: 14px; opacity: 0;
+    color: var(--pink-soft);
+    animation: drift linear infinite;
+    pointer-events: none;
+    filter: blur(0.4px);
+  }
+  @keyframes drift {
+    0%   { transform: translate(0, -4vh) rotate(0deg); opacity: 0; }
+    8%   { opacity: 0.5; }
+    88%  { opacity: 0.35; }
+    100% { transform: translate(-9vw, 104vh) rotate(320deg); opacity: 0; }
+  }
+
+  /* ============ BLOSSOM GATE ============ */
+  .gate {
+    position: relative;
+    text-align: center;
+    padding: 2rem 0 0;
+  }
+  .gate-title {
+    font-family: var(--serif);
+    font-size: clamp(1.25rem, 3vw, 1.7rem);
+    font-weight: 500;
+    color: var(--ink);
+    letter-spacing: 0.08em;
+  }
+  .gate-hint {
+    margin-top: 0.6rem;
+    color: var(--ink-dim);
+    font-size: 0.82rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .gate-hint .swipe-ico {
+    display: inline-block;
+    animation: swipehint 2.4s ease-in-out infinite;
+    color: var(--pink);
+  }
+  @keyframes swipehint {
+    0%, 100% { transform: translateX(-14px); opacity: 0.4; }
+    50% { transform: translateX(14px); opacity: 1; }
+  }
+  #gateCanvas {
+    display: block;
+    width: 100%;
+    height: 62vh;
+    touch-action: none;
+    cursor: grab;
+  }
+  .gate-progress {
+    position: absolute;
+    bottom: 1.4rem; left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.72rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    pointer-events: none;
+    transition: opacity 0.4s;
+  }
+  .gate-skip {
+    position: absolute;
+    bottom: 1.2rem; right: 1.6rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.25);
+    background: none; border: none;
+    cursor: pointer;
+    font-family: var(--sans);
+    opacity: 0;
+    transition: opacity 0.8s;
+    pointer-events: none;
+  }
+  .gate-skip.show { opacity: 1; pointer-events: auto; }
+  .gate-skip:hover { color: var(--pink-soft); }
+  .gate.done #gateCanvas { cursor: default; }
+
+  /* ============ REVEALED CONTENT ============ */
+  #revealed { display: none; }
+  body.unlocked #revealed { display: block; }
+  body.unlocked .gate-shell { display: none; }
+  .reveal-in {
+    animation: revealUp 1.1s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .reveal-in.d1 { animation-delay: 0.18s; }
+  .reveal-in.d2 { animation-delay: 0.32s; }
+  .reveal-in.d3 { animation-delay: 0.55s; }
+  .reveal-in.d4 { animation-delay: 0.75s; }
+  @keyframes revealUp {
+    from { opacity: 0; transform: translateY(46px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ============ SECTION DIVIDERS (bamboo / blossom) ============ */
+  .divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+    padding: 4.2rem 0 3.4rem;
+  }
+  .divider svg { opacity: 0.75; }
+  .divider .line {
+    height: 1px; width: min(180px, 24vw);
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22));
+  }
+  .divider .line.full {
+    width: min(400px, 52vw);
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent);
+  }
+
+  /* ============ RECAP STRIP ============ */
+  .recap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 1rem 24px 0;
+    text-align: center;
+  }
+  .recap h2 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(1.5rem, 3.4vw, 2.1rem);
+    letter-spacing: 0.05em;
+  }
+  .recap h2 .pink { color: var(--pink); }
+  .recap h2 .green { color: var(--green); }
+  .recap p {
+    margin-top: 1.3rem;
+    color: var(--ink-dim);
+    font-size: 1rem;
+    max-width: 620px;
+    margin-left: auto; margin-right: auto;
+  }
+
+  /* ============ KOI POND ============ */
+  .pond-section {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 24px;
+    text-align: center;
+  }
+  .pond-title {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(1.6rem, 3.8vw, 2.4rem);
+    letter-spacing: 0.06em;
+  }
+  .pond-desc {
+    margin: 1.1rem auto 0.9rem;
+    max-width: 640px;
+    color: var(--ink-dim);
+    font-size: 0.98rem;
+  }
+  .pond-sub {
+    font-style: italic;
+    color: var(--ink-dim);
+    margin-top: 0.55rem;
+    font-size: 0.95rem;
+    font-family: var(--serif);
+  }
+  .pond-sub .soda { color: var(--green-soft); }
+  .pond-wrap {
+    position: relative;
+    margin-top: 2.2rem;
+    border-radius: 26px;
+    overflow: hidden;
+    border: 1px solid rgba(141, 255, 106, 0.14);
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.03) inset,
+      0 0 60px rgba(141, 255, 106, 0.05),
+      0 24px 70px rgba(0,0,0,0.55);
+  }
+  #pondCanvas {
+    display: block;
+    width: 100%;
+    height: clamp(420px, 62vh, 640px);
+    cursor: default;
+  }
+  .pond-legend {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.6rem;
+    margin-top: 1.4rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+  .pond-legend .chip {
+    display: inline-block;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    margin-right: 0.5em;
+    vertical-align: middle;
+  }
+  .chip-host { background: var(--gold); box-shadow: 0 0 8px var(--gold); }
+  .chip-show { background: var(--pink); box-shadow: 0 0 8px var(--pink); }
+  .chip-know { background: #fff; box-shadow: 0 0 8px #fff; }
+  .pond-note {
+    margin-top: 1rem;
+    color: rgba(255,255,255,0.35);
+    font-size: 0.8rem;
+  }
+
+  /* ============ ATTENDEE MODAL ============ */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(5, 5, 8, 0.72);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 60;
+    padding: 24px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: linear-gradient(160deg, #16161c, #101015);
+    border: 1px solid rgba(255, 61, 158, 0.35);
+    box-shadow:
+      0 0 40px rgba(255, 61, 158, 0.14),
+      0 30px 80px rgba(0,0,0,0.6);
+    border-radius: 20px;
+    width: min(430px, 100%);
+    padding: 2.1rem 2.1rem 1.9rem;
+    position: relative;
+    text-align: left;
+    animation: modalIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes modalIn {
+    from { opacity: 0; transform: translateY(18px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .modal-close {
+    position: absolute; top: 0.9rem; right: 1.1rem;
+    background: none; border: none;
+    color: var(--ink-dim);
+    font-size: 1.4rem;
+    cursor: pointer;
+    line-height: 1;
+    font-family: var(--sans);
+  }
+  .modal-close:hover { color: var(--pink); }
+  .modal .role-tag {
+    display: inline-block;
+    font-size: 0.66rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    padding: 0.3em 0.9em;
+    border-radius: 999px;
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+  .role-hoster { color: #1a1405; background: var(--gold); box-shadow: 0 0 14px rgba(255, 210, 122, 0.5); }
+  .role-shower { color: #fff; background: var(--pink); box-shadow: 0 0 14px rgba(255, 61, 158, 0.5); }
+  .role-knower { color: #101014; background: #f4f4f4; box-shadow: 0 0 14px rgba(255,255,255,0.4); }
+  .modal h3 {
+    font-family: var(--serif);
+    font-size: 1.55rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .modal .m-title {
+    color: var(--ink-dim);
+    font-size: 0.94rem;
+    margin-top: 0.25rem;
+  }
+  .modal .m-link { margin-top: 0.9rem; font-size: 0.9rem; }
+  .modal .m-link a {
+    color: var(--green-soft);
+    text-decoration: none;
+    border-bottom: 1px dashed rgba(141,255,106,0.4);
+  }
+  .modal .m-link a:hover { color: var(--green); }
+  .modal .m-notes {
+    margin-top: 1.2rem;
+    background: rgba(255, 199, 221, 0.05);
+    border-left: 2px solid var(--pink);
+    padding: 0.85rem 1rem;
+    font-size: 0.9rem;
+    color: var(--ink-dim);
+    border-radius: 0 10px 10px 0;
+  }
+  .modal .m-notes .label {
+    display: block;
+    font-size: 0.62rem;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--pink-soft);
+    margin-bottom: 0.35rem;
+  }
+
+  /* ============ QUOTE ============ */
+  .quote-section {
+    text-align: center;
+    padding: 7rem 24px 5.5rem;
+    position: relative;
+  }
+  .quote-mark {
+    font-family: var(--serif);
+    font-size: 3rem;
+    color: var(--pink);
+    opacity: 0.8;
+    line-height: 0.5;
+  }
+  blockquote {
+    font-family: var(--serif);
+    font-size: clamp(1.7rem, 4.6vw, 3rem);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    max-width: 820px;
+    margin: 1.6rem auto 0;
+    color: #fff;
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.18);
+  }
+  .quote-attr {
+    margin-top: 1.8rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+  .quote-attr .x { color: var(--pink); margin: 0 0.8em; }
+
+  /* ============ FOOTER ============ */
+  footer {
+    border-top: 1px solid rgba(255,255,255,0.07);
+    padding: 3.4rem 24px 3rem;
+    text-align: center;
+    position: relative;
+  }
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2.2rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .footer-links a {
+    color: var(--ink-dim);
+    text-decoration: none;
+    transition: color 0.25s, text-shadow 0.25s;
+  }
+  .footer-links a:hover { color: var(--pink-soft); text-shadow: 0 0 12px var(--pink); }
+  .footer-fine {
+    margin-top: 1.8rem;
+    color: rgba(255,255,255,0.3);
+    font-size: 0.76rem;
+    letter-spacing: 0.12em;
+  }
+  .footer-art { margin-top: 2.4rem; opacity: 0.85; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .neon-main, .neon-green, .neon-pink, .neon-gold, .neon-sub { animation: none; }
+    .hero-petal { display: none; }
+    .gate-hint .swipe-ico { animation: none; }
+  }
+  @media (max-width: 620px) {
+    .neon-row { grid-template-columns: 1fr; gap: 2.2rem; margin-top: 3.4rem; }
+    #gateCanvas { height: 54vh; }
+    .hero { min-height: 86vh; }
+  }
+</style>
+</head>
+<body>
+<div class="bg-grid" aria-hidden="true"></div>
+
+<main>
+  <!-- ================= HERO ================= -->
+  <header class="hero" id="top">
+    <div class="hero-kicker">Show <span class="dot">·</span> Know <span class="dot">·</span> Cleveland's AI Open Mic</div>
+
+    <a class="neon neon-main" href="https://www.opencle.com" target="_blank" rel="noopener" aria-label="OpenCLE website">OpenCLE</a>
+    <div class="neon-recap">The recap</div>
+    <div class="neon-sub">お集まりいただき光栄です — "we are honored that you gathered here"</div>
+
+    <div class="neon-row">
+      <a class="neon neon-small neon-green" href="https://www.futurelandcle.com" target="_blank" rel="noopener">Futureland
+        <span class="sign-tag">Convene · Connect · Build</span>
+      </a>
+      <a class="neon neon-small neon-pink" href="https://www.eatatsora.com" target="_blank" rel="noopener">Sora
+        <span class="sign-tag">Our host · Flats East Bank</span>
+      </a>
+      <a class="neon neon-small neon-gold" href="https://www.forgranted.com" target="_blank" rel="noopener">For Granted
+        <span class="sign-tag">Find your story. Fund your mission.</span>
+      </a>
+    </div>
+
+    <div class="hero-meta">
+      <strong>Thursday, July 30, 2026</strong><span class="sep">|</span>6–8 PM<span class="sep">|</span>Sora, 1121 W 10th St, Cleveland
+    </div>
+  </header>
+
+  <!-- ================= BLOSSOM GATE ================= -->
+  <div class="gate-shell">
+    <section class="gate" id="gate">
+      <h2 class="gate-title">Clear the blossoms to reveal the page</h2>
+      <div class="gate-hint"><span class="swipe-ico">&#10231;</span>&nbsp;&nbsp;swipe across the petals</div>
+      <canvas id="gateCanvas" aria-label="Cherry blossom petals. Swipe horizontally to clear them and reveal the page."></canvas>
+      <div class="gate-progress" id="gateProgress"></div>
+      <button class="gate-skip" id="gateSkip" type="button">let the wind take them &rarr;</button>
+    </section>
+  </div>
+
+  <!-- ================= REVEALED CONTENT ================= -->
+  <div id="revealed">
+
+    <section class="recap reveal-in">
+      <h2>You <span class="pink">showed</span>. You <span class="green">knew</span>. Cleveland noticed.</h2>
+      <p>Five-minute demos. No cheerleading, no hype — just real AI projects, live Q&amp;A, and a room full of founders, builders, educators, and the curious, fed well beneath the cherry blossoms at Sora. This page is yours: an exclusive leave-behind for the people who were in the room.</p>
+    </section>
+
+    <div class="divider reveal-in d1" aria-hidden="true">
+      <div class="line full"></div>
+    </div>
+
+    <!-- ================= KOI POND ================= -->
+    <section class="pond-section reveal-in d2">
+      <h2 class="pond-title">The OpenCLE Community Pond</h2>
+      <p class="pond-desc">A gathering only lasts an evening — its connections shouldn't. The Community Pond was created, leveraging the power of AI, to make sure the people you met tonight stay findable, the conversations keep going, and the community we started cultivating at Sora continues to grow.</p>
+      <p class="pond-sub">Powered by <span class="soda">Futureland's SODA technology</span></p>
+
+      <div class="pond-wrap">
+        <canvas id="pondCanvas" aria-label="Interactive koi pond. Each koi is an attendee — click a koi to see who they are."></canvas>
+      </div>
+
+      <div class="pond-legend">
+        <span><span class="chip chip-host"></span>Host-er</span>
+        <span><span class="chip chip-show"></span>Show-er / Presenter</span>
+        <span><span class="chip chip-know"></span>Know-er / Attendee</span>
+      </div>
+      <p class="pond-note">Every koi is a person who was in the room. Click one to say hello.</p>
+    </section>
+
+    <!-- ================= QUOTE ================= -->
+    <section class="quote-section reveal-in d3">
+      <div class="quote-mark">&#8221;</div>
+      <blockquote>It is so good that you are here.</blockquote>
+      <div class="quote-attr">For Granted <span class="x">&times;</span> Futureland</div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="reveal-in d4">
+      <div class="footer-links">
+        <a href="https://www.opencle.com" target="_blank" rel="noopener">OpenCLE</a>
+        <a href="https://www.futurelandcle.com" target="_blank" rel="noopener">Futureland</a>
+        <a href="https://www.eatatsora.com" target="_blank" rel="noopener">Sora</a>
+        <a href="https://www.forgranted.com" target="_blank" rel="noopener">For Granted</a>
+      </div>
+      <div class="footer-fine">OpenCLE · Cleveland's AI Open Mic · July 30, 2026 · Hosted at Sora, Flats East Bank</div>
+    </footer>
+  </div>
+</main>
+
+<!-- ================= ATTENDEE MODAL ================= -->
+<div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalName">
+  <div class="modal">
+    <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
+    <span class="role-tag" id="modalRole"></span>
+    <h3 id="modalName"></h3>
+    <div class="m-title" id="modalTitle"></div>
+    <div class="m-link" id="modalLink"></div>
+    <div class="m-notes" id="modalNotesWrap">
+      <span class="label">From the post-event survey</span>
+      <span id="modalNotes"></span>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ==========================================================================
+   OpenCLE Recap — interactions
+   1) Cherry-blossom gate  (swipe horizontally to clear, unlocks the page)
+   2) Koi pond             (each koi = one attendee, click to open profile)
+   ========================================================================== */
+
+/* ============================================================
+   ATTENDEE DATA — edit this list to populate the pond.
+   role: "Host-er" | "Show-er" | "Know-er"
+   Pond comfortably supports up to 100 entries.
+   ============================================================ */
+const ATTENDEES = [
+  {
+    name: "Tyler Kohrt",
+    title: "Co-Founder & CEO, For Granted",
+    linkedin: "https://www.linkedin.com/in/tylerkohrt",
+    role: "Host-er",
+    notes: "[Post-survey notes go here]"
+  },
+  {
+    name: "Shane Winnyk",
+    title: "Co-Founder & Chief Relationships Officer, For Granted",
+    linkedin: "https://www.linkedin.com/in/shanewinnyk",
+    role: "Host-er",
+    notes: "[Post-survey notes go here]"
+  },
+  {
+    name: "Futureland Team",
+    title: "Convene · Connect · Build — Futureland CLE",
+    linkedin: "https://www.futurelandcle.com",
+    role: "Host-er",
+    notes: "[Post-survey notes go here]"
+  },
+  {
+    name: "Sample Show-er",
+    title: "Founder, [Company] — demoed [project]",
+    linkedin: "https://www.linkedin.com/",
+    role: "Show-er",
+    notes: "[What they demoed + survey notes go here]"
+  },
+  {
+    name: "Sample Know-er",
+    title: "[Job title], [Organization]",
+    linkedin: "https://www.linkedin.com/",
+    role: "Know-er",
+    notes: "[Post-survey notes go here]"
+  },
+  {
+    name: "Sample Know-er II",
+    title: "[Job title], [Organization]",
+    linkedin: "https://www.linkedin.com/",
+    role: "Know-er",
+    notes: "[Post-survey notes go here]"
+  }
+];
+
+/* ============================================================
+   1) BLOSSOM GATE
+   ============================================================ */
+(function () {
+  const canvas = document.getElementById('gateCanvas');
+  const ctx = canvas.getContext('2d');
+  const progressEl = document.getElementById('gateProgress');
+  const skipBtn = document.getElementById('gateSkip');
+  const gateEl = document.getElementById('gate');
+
+  let W = 0, H = 0, dpr = 1;
+  let petals = [];
+  let unlocked = false;
+  let rafId = null;
+
+  const PETAL_COLORS = ['#ffd7e6', '#ffc0d9', '#ff9ec7', '#fff0f5', '#ffb3d2'];
+
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = canvas.clientWidth;
+    H = canvas.clientHeight;
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function makePetals() {
+    petals = [];
+    const count = Math.min(130, Math.max(70, Math.floor((W * H) / 7200)));
+    for (let i = 0; i < count; i++) {
+      petals.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        homeX: 0, homeY: 0,
+        size: 10 + Math.random() * 12,
+        rot: Math.random() * Math.PI * 2,
+        rotSpeed: (Math.random() - 0.5) * 0.02,
+        swayPhase: Math.random() * Math.PI * 2,
+        swaySpeed: 0.4 + Math.random() * 0.6,
+        color: PETAL_COLORS[(Math.random() * PETAL_COLORS.length) | 0],
+        alpha: 0.85 + Math.random() * 0.15,
+        vx: 0, vy: 0,
+        flying: false,
+        gone: false
+      });
+    }
+  }
+
+  function drawPetal(p, t) {
+    /* full five-petal cherry blossom */
+    const sway = Math.sin(t * 0.001 * p.swaySpeed + p.swayPhase) * 2.4;
+    const s = p.size;
+    ctx.save();
+    ctx.translate(p.x + (p.flying ? 0 : sway), p.y);
+    ctx.rotate(p.rot);
+    ctx.globalAlpha = Math.max(0, p.alpha);
+
+    for (let i = 0; i < 5; i++) {
+      ctx.save();
+      ctx.rotate((Math.PI * 2 / 5) * i);
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      /* petal pointing outward along +y, with the classic notched tip */
+      ctx.moveTo(0, s * 0.08);
+      ctx.bezierCurveTo(s * 0.34, s * 0.12, s * 0.44, s * 0.6, s * 0.2, s * 0.92);
+      ctx.quadraticCurveTo(s * 0.08, s * 1.0, 0, s * 0.82);      /* notch dip */
+      ctx.quadraticCurveTo(-s * 0.08, s * 1.0, -s * 0.2, s * 0.92);
+      ctx.bezierCurveTo(-s * 0.44, s * 0.6, -s * 0.34, s * 0.12, 0, s * 0.08);
+      ctx.closePath();
+      ctx.fill();
+      /* soft white sheen toward petal base */
+      ctx.globalAlpha = Math.max(0, p.alpha * 0.3);
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.ellipse(0, s * 0.34, s * 0.12, s * 0.22, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = Math.max(0, p.alpha);
+      ctx.restore();
+    }
+
+    /* stamen center */
+    ctx.fillStyle = '#fff3d6';
+    ctx.beginPath();
+    ctx.arc(0, 0, s * 0.14, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#e8b64c';
+    for (let i = 0; i < 5; i++) {
+      const a = (Math.PI * 2 / 5) * i + 0.6;
+      ctx.beginPath();
+      ctx.arc(Math.cos(a) * s * 0.2, Math.sin(a) * s * 0.2, s * 0.05, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  let lastPointer = null;
+
+  function onPointerMove(e) {
+    if (unlocked) return;
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const now = performance.now();
+    if (lastPointer) {
+      const dt = Math.max(now - lastPointer.t, 1);
+      const dx = x - lastPointer.x;
+      const dy = y - lastPointer.y;
+      const vx = dx / dt; /* px per ms */
+      /* horizontal swipe: fast x motion, dominantly horizontal */
+      if (Math.abs(vx) > 0.25 && Math.abs(dx) > Math.abs(dy) * 1.15) {
+        sweep(x, y, vx);
+      }
+    }
+    lastPointer = { x: x, y: y, t: now };
+  }
+
+  function sweep(x, y, vx) {
+    const R = 95;
+    for (const p of petals) {
+      if (p.gone || p.flying) continue;
+      const dx = p.x - x, dy = p.y - y;
+      const d2 = dx * dx + dy * dy;
+      if (d2 < R * R) {
+        const falloff = 1 - Math.sqrt(d2) / R;
+        p.flying = true;
+        p.vx = vx * (14 + Math.random() * 10) * (0.6 + falloff);
+        p.vy = -(0.8 + Math.random() * 1.6) - Math.abs(vx) * 2;
+        p.rotSpeed = (Math.random() - 0.5) * 0.3;
+      }
+    }
+  }
+
+  function clearedRatio() {
+    let gone = 0;
+    for (const p of petals) if (p.gone) gone++;
+    return petals.length ? gone / petals.length : 1;
+  }
+
+  function unlock() {
+    if (unlocked) return;
+    unlocked = true;
+    /* fling all remaining petals off */
+    for (const p of petals) {
+      if (!p.gone && !p.flying) {
+        p.flying = true;
+        p.vx = (Math.random() < 0.5 ? -1 : 1) * (6 + Math.random() * 14);
+        p.vy = -(1 + Math.random() * 3);
+        p.rotSpeed = (Math.random() - 0.5) * 0.3;
+      }
+    }
+    gateEl.classList.add('done');
+    progressEl.textContent = '';
+    setTimeout(function () {
+      document.body.classList.add('unlocked');
+      cancelAnimationFrame(rafId);
+      var target = document.getElementById('revealed');
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      startPond(); /* pond boots once visible */
+    }, 850);
+  }
+
+  function frame(t) {
+    ctx.clearRect(0, 0, W, H);
+    for (const p of petals) {
+      if (p.gone) continue;
+      if (p.flying) {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.18;           /* gravity-ish arc */
+        p.vx *= 0.985;
+        p.rot += p.rotSpeed;
+        p.alpha -= 0.006;
+        if (p.x < -60 || p.x > W + 60 || p.y > H + 60 || p.alpha <= 0) {
+          p.gone = true;
+          continue;
+        }
+      } else {
+        p.rot += p.rotSpeed * 0.4;
+      }
+      drawPetal(p, t);
+    }
+    if (!unlocked) {
+      const r = clearedRatio();
+      const remaining = petals.length - petals.filter(function (p) { return p.gone; }).length;
+      progressEl.textContent = r > 0.02 ? Math.round(r * 100) + '% clear' : '';
+      if (r >= 0.86) unlock();
+    }
+    rafId = requestAnimationFrame(frame);
+  }
+
+  function init() {
+    resize();
+    makePetals();
+    canvas.addEventListener('pointermove', onPointerMove);
+    canvas.addEventListener('pointerdown', function (e) { lastPointer = null; onPointerMove(e); });
+    window.addEventListener('resize', function () {
+      if (unlocked) return;
+      resize();
+    });
+    /* discreet skip appears after 14s */
+    setTimeout(function () { skipBtn.classList.add('show'); }, 14000);
+    skipBtn.addEventListener('click', unlock);
+    rafId = requestAnimationFrame(frame);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
+/* ============================================================
+   2) KOI POND
+   ============================================================ */
+var startPond = (function () {
+  var started = false;
+
+  return function startPond() {
+    if (started) return;
+    started = true;
+
+    const canvas = document.getElementById('pondCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let W = 0, H = 0, dpr = 1;
+
+    const ROLE_STYLE = {
+      'Host-er': { body: '#f6d27e', patch: '#e08a1e', fin: 'rgba(246, 210, 126, 0.55)', glow: 'rgba(255, 210, 122, 0.35)' },
+      'Show-er': { body: '#ffe9f3', patch: '#ff3d9e', fin: 'rgba(255, 61, 158, 0.4)', glow: 'rgba(255, 61, 158, 0.3)' },
+      'Know-er': { body: '#f7f7f5', patch: '#e8623a', fin: 'rgba(255, 255, 255, 0.45)', glow: 'rgba(255, 255, 255, 0.25)' }
+    };
+
+    /* koi size scales down as the pond fills (supports ~100) */
+    function koiLength(count) {
+      if (count <= 12) return 52;
+      if (count <= 30) return 44;
+      if (count <= 60) return 36;
+      return 30;
+    }
+
+    let koiList = [];
+    let ripples = [];
+    let hoverKoi = null;
+
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = canvas.clientWidth;
+      H = canvas.clientHeight;
+      canvas.width = W * dpr;
+      canvas.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function makeKoi() {
+      const L = koiLength(ATTENDEES.length);
+      koiList = ATTENDEES.map(function (a, i) {
+        /* seeded-ish placement: spiral so koi never start stacked */
+        const golden = 2.399963;
+        const rr = 0.12 + 0.36 * Math.sqrt((i + 0.5) / ATTENDEES.length);
+        const th = i * golden;
+        return {
+          data: a,
+          x: W * (0.5 + rr * Math.cos(th)),
+          y: H * (0.5 + rr * 0.85 * Math.sin(th)),
+          heading: Math.random() * Math.PI * 2,
+          speed: 0.22 + Math.random() * 0.18,
+          turn: 0,
+          phase: Math.random() * Math.PI * 2,
+          len: L * (0.92 + Math.random() * 0.18),
+          patches: makePatches()
+        };
+      });
+    }
+
+    function makePatches() {
+      const n = 1 + ((Math.random() * 2.4) | 0);
+      const arr = [];
+      for (let i = 0; i < n; i++) {
+        arr.push({
+          u: -0.28 + Math.random() * 0.6,   /* along body  */
+          v: (Math.random() - 0.5) * 0.5,   /* across body */
+          r: 0.16 + Math.random() * 0.2
+        });
+      }
+      return arr;
+    }
+
+    /* --- water --- */
+    function drawWater(t) {
+      const g = ctx.createLinearGradient(0, 0, 0, H);
+      g.addColorStop(0, '#0d2124');
+      g.addColorStop(0.55, '#0b1c20');
+      g.addColorStop(1, '#081316');
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, W, H);
+
+      /* light caustic bands */
+      ctx.save();
+      ctx.globalAlpha = 0.028;
+      for (let i = 0; i < 3; i++) {
+        const yy = (t * 0.006 + i * H / 3) % (H + 280) - 140;
+        const grad = ctx.createLinearGradient(0, yy - 120, 0, yy + 120);
+        grad.addColorStop(0, 'rgba(141,255,106,0)');
+        grad.addColorStop(0.5, 'rgba(141,255,106,1)');
+        grad.addColorStop(1, 'rgba(141,255,106,0)');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, yy - 120, W, 240);
+      }
+      ctx.restore();
+
+      /* ripples */
+      for (let i = ripples.length - 1; i >= 0; i--) {
+        const r = ripples[i];
+        r.r += r.vr;
+        r.a -= 0.004;
+        if (r.a <= 0) { ripples.splice(i, 1); continue; }
+        ctx.strokeStyle = 'rgba(220, 245, 255,' + r.a.toFixed(3) + ')';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.ellipse(r.x, r.y, r.r, r.r * 0.6, 0, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+      if (Math.random() < 0.02 && ripples.length < 7) {
+        ripples.push({ x: Math.random() * W, y: Math.random() * H, r: 2, vr: 0.35, a: 0.16 });
+      }
+
+      /* corner lily pads */
+      drawLily(W * 0.075, H * 0.12, 34, t);
+      drawLily(W * 0.93, H * 0.85, 42, t);
+      drawLily(W * 0.885, H * 0.16, 24, t);
+    }
+
+    function drawLily(x, y, r, t) {
+      ctx.save();
+      ctx.translate(x + Math.sin(t * 0.0004 + x) * 2, y);
+      ctx.rotate(0.3 + Math.sin(x) * 0.5);
+      ctx.fillStyle = 'rgba(38, 84, 55, 0.9)';
+      ctx.beginPath();
+      ctx.arc(0, 0, r, 0.25, Math.PI * 2 - 0.25);
+      ctx.lineTo(0, 0);
+      ctx.closePath();
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(141, 255, 106, 0.15)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    /* --- koi --- */
+    function drawKoi(k, t, isHover) {
+      const style = ROLE_STYLE[k.data.role] || ROLE_STYLE['Know-er'];
+      const wig = Math.sin(t * 0.004 + k.phase);
+      const tailWig = Math.sin(t * 0.004 + k.phase - 1.2);
+      const L = k.len, Wd = L * 0.34;
+
+      ctx.save();
+      ctx.translate(k.x, k.y);
+      ctx.rotate(k.heading);
+
+      /* soft glow ring on hover, subtle glow otherwise */
+      if (isHover) {
+        ctx.save();
+        ctx.globalAlpha = 0.75;
+        ctx.strokeStyle = style.glow.replace(/[\d.]+\)$/, '0.9)');
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.ellipse(0, 0, L * 0.85, L * 0.62, 0, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      /* shadow */
+      ctx.save();
+      ctx.globalAlpha = 0.28;
+      ctx.fillStyle = '#000';
+      ctx.beginPath();
+      ctx.ellipse(3, 6, L * 0.52, Wd * 0.72, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+
+      /* tail fan */
+      ctx.save();
+      ctx.translate(-L * 0.5, 0);
+      ctx.rotate(tailWig * 0.45);
+      ctx.fillStyle = style.fin;
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.quadraticCurveTo(-L * 0.42, -Wd * 0.85, -L * 0.5, -Wd * 0.25);
+      ctx.quadraticCurveTo(-L * 0.34, 0, -L * 0.5, Wd * 0.25);
+      ctx.quadraticCurveTo(-L * 0.42, Wd * 0.85, 0, 0);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+
+      /* pectoral fins */
+      ctx.fillStyle = style.fin;
+      ctx.save();
+      ctx.translate(L * 0.12, -Wd * 0.5);
+      ctx.rotate(-0.7 + wig * 0.14);
+      ctx.beginPath();
+      ctx.ellipse(0, 0, L * 0.16, Wd * 0.3, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+      ctx.save();
+      ctx.translate(L * 0.12, Wd * 0.5);
+      ctx.rotate(0.7 - wig * 0.14);
+      ctx.beginPath();
+      ctx.ellipse(0, 0, L * 0.16, Wd * 0.3, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+
+      /* body — slight bend with wiggle */
+      ctx.save();
+      ctx.rotate(wig * 0.05);
+      ctx.fillStyle = style.body;
+      ctx.beginPath();
+      ctx.moveTo(L * 0.5, 0);                                     /* nose */
+      ctx.quadraticCurveTo(L * 0.42, -Wd, -L * 0.1, -Wd * 0.72);
+      ctx.quadraticCurveTo(-L * 0.48, -Wd * 0.3 + wig * 2, -L * 0.5, 0);
+      ctx.quadraticCurveTo(-L * 0.48, Wd * 0.3 + wig * 2, -L * 0.1, Wd * 0.72);
+      ctx.quadraticCurveTo(L * 0.42, Wd, L * 0.5, 0);
+      ctx.closePath();
+      ctx.fill();
+
+      /* patches clipped to body */
+      ctx.clip();
+      ctx.fillStyle = style.patch;
+      for (const p of k.patches) {
+        ctx.beginPath();
+        ctx.ellipse(p.u * L, p.v * Wd * 2, p.r * L, p.r * L * 0.8, p.u * 2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      /* head sheen */
+      ctx.globalAlpha = 0.25;
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.ellipse(L * 0.3, -Wd * 0.2, L * 0.16, Wd * 0.3, -0.3, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+
+      /* eyes */
+      ctx.fillStyle = '#14100c';
+      ctx.beginPath();
+      ctx.arc(L * 0.36, -Wd * 0.34, Math.max(1.4, L * 0.035), 0, Math.PI * 2);
+      ctx.arc(L * 0.36, Wd * 0.34, Math.max(1.4, L * 0.035), 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    function stepKoi(k) {
+      /* gentle wander */
+      k.turn += (Math.random() - 0.5) * 0.012;
+      k.turn *= 0.92;
+
+      /* boundary steering — always keep koi comfortably on screen */
+      const margin = k.len * 1.1;
+      let steer = 0;
+      if (k.x < margin) steer = angleSteer(k.heading, 0);
+      else if (k.x > W - margin) steer = angleSteer(k.heading, Math.PI);
+      if (k.y < margin) steer += angleSteer(k.heading, Math.PI / 2);
+      else if (k.y > H - margin) steer += angleSteer(k.heading, -Math.PI / 2);
+
+      k.heading += k.turn + steer * 0.05;
+      k.x += Math.cos(k.heading) * k.speed;
+      k.y += Math.sin(k.heading) * k.speed;
+
+      /* hard clamp as belt-and-braces (never off screen) */
+      const pad = k.len * 0.6;
+      k.x = Math.min(Math.max(k.x, pad), W - pad);
+      k.y = Math.min(Math.max(k.y, pad), H - pad);
+    }
+
+    function angleSteer(current, target) {
+      let d = target - current;
+      while (d > Math.PI) d -= Math.PI * 2;
+      while (d < -Math.PI) d += Math.PI * 2;
+      return d;
+    }
+
+    function koiAt(x, y) {
+      /* generous hit area; iterate topmost-last */
+      for (let i = koiList.length - 1; i >= 0; i--) {
+        const k = koiList[i];
+        const r = Math.max(k.len * 0.75, 26);
+        const dx = x - k.x, dy = y - k.y;
+        if (dx * dx + dy * dy < r * r) return k;
+      }
+      return null;
+    }
+
+    /* --- interactions --- */
+    function canvasPos(e) {
+      const rect = canvas.getBoundingClientRect();
+      return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    }
+
+    canvas.addEventListener('pointermove', function (e) {
+      const p = canvasPos(e);
+      hoverKoi = koiAt(p.x, p.y);
+      canvas.style.cursor = hoverKoi ? 'pointer' : 'default';
+    });
+
+    canvas.addEventListener('click', function (e) {
+      const p = canvasPos(e);
+      const k = koiAt(p.x, p.y);
+      if (k) {
+        ripples.push({ x: k.x, y: k.y, r: 4, vr: 0.8, a: 0.35 });
+        openModal(k.data);
+      }
+    });
+
+    /* --- modal --- */
+    const overlay = document.getElementById('modalOverlay');
+    const mClose = document.getElementById('modalClose');
+    const mRole = document.getElementById('modalRole');
+    const mName = document.getElementById('modalName');
+    const mTitle = document.getElementById('modalTitle');
+    const mLink = document.getElementById('modalLink');
+    const mNotes = document.getElementById('modalNotes');
+
+    function openModal(a) {
+      mRole.textContent = a.role;
+      mRole.className = 'role-tag ' + (
+        a.role === 'Host-er' ? 'role-hoster' :
+        a.role === 'Show-er' ? 'role-shower' : 'role-knower'
+      );
+      mName.textContent = a.name;
+      mTitle.textContent = a.title || '';
+      if (a.linkedin) {
+        mLink.innerHTML = '<a href="' + a.linkedin + '" target="_blank" rel="noopener">LinkedIn profile &nearr;</a>';
+        mLink.style.display = '';
+      } else {
+        mLink.style.display = 'none';
+      }
+      mNotes.textContent = a.notes || '—';
+      overlay.classList.add('open');
+    }
+    function closeModal() { overlay.classList.remove('open'); }
+    mClose.addEventListener('click', closeModal);
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) closeModal(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+
+    /* --- hover name label --- */
+    function drawNameLabel(k) {
+      const name = k.data.name;
+      ctx.save();
+      ctx.font = '600 13px "Zen Kaku Gothic New", "Helvetica Neue", Arial, sans-serif';
+      const tw = ctx.measureText(name).width;
+      const padX = 12, h = 26;
+      const w = tw + padX * 2;
+      let lx = k.x - w / 2;
+      let ly = k.y - k.len * 0.85 - h - 6;
+      /* keep label inside the pond */
+      lx = Math.min(Math.max(lx, 8), W - w - 8);
+      if (ly < 8) ly = k.y + k.len * 0.85 + 6;
+
+      const style = ROLE_STYLE[k.data.role] || ROLE_STYLE['Know-er'];
+      ctx.fillStyle = 'rgba(8, 10, 12, 0.86)';
+      ctx.strokeStyle = style.glow;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      const r = h / 2;
+      ctx.moveTo(lx + r, ly);
+      ctx.arcTo(lx + w, ly, lx + w, ly + h, r);
+      ctx.arcTo(lx + w, ly + h, lx, ly + h, r);
+      ctx.arcTo(lx, ly + h, lx, ly, r);
+      ctx.arcTo(lx, ly, lx + w, ly, r);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = '#f2f0ee';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(name, lx + padX, ly + h / 2 + 1);
+      ctx.restore();
+    }
+
+    /* --- main loop --- */
+    function frame(t) {
+      drawWater(t);
+      for (const k of koiList) {
+        stepKoi(k);
+        drawKoi(k, t, k === hoverKoi);
+      }
+      if (hoverKoi) drawNameLabel(hoverKoi);
+      requestAnimationFrame(frame);
+    }
+
+    resize();
+    makeKoi();
+    window.addEventListener('resize', function () {
+      const oldW = W, oldH = H;
+      resize();
+      /* keep koi proportionally placed on resize */
+      if (oldW && oldH) {
+        for (const k of koiList) {
+          k.x = k.x / oldW * W;
+          k.y = k.y / oldH * H;
+        }
+      }
+    });
+    requestAnimationFrame(frame);
+  };
+})();
+
+/* hero drifting petals — a handful, tasteful */
+(function () {
+  const hero = document.querySelector('.hero');
+  if (!hero) return;
+  const glyphs = ['✿', '❀', '⸙'];
+  for (let i = 0; i < 7; i++) {
+    const el = document.createElement('span');
+    el.className = 'hero-petal';
+    el.textContent = glyphs[i % glyphs.length];
+    el.style.left = (5 + Math.random() * 90) + '%';
+    el.style.fontSize = (10 + Math.random() * 10) + 'px';
+    el.style.animationDuration = (14 + Math.random() * 14) + 's';
+    el.style.animationDelay = (Math.random() * 16) + 's';
+    hero.appendChild(el);
+  }
+})();
+</script>
+</body>
+</html>
