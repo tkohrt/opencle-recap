@@ -333,6 +333,31 @@
     background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent);
   }
 
+  /* ============ VIDEO ============ */
+  .video-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 3.4rem 24px 0;
+  }
+  .video-frame {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 61, 158, 0.22);
+    box-shadow:
+      0 0 40px rgba(255, 61, 158, 0.08),
+      0 18px 50px rgba(0, 0, 0, 0.5);
+    background: #000;
+  }
+  .video-frame iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
   /* ============ RECAP STRIP ============ */
   .recap {
     max-width: 860px;
@@ -855,6 +880,12 @@
       <p>Five-minute demos. No cheerleading, no hype — just real AI projects, live Q&amp;A, and a room full of founders, builders, educators, and the curious, fed well beneath the cherry blossoms at Sora. This page is yours: an exclusive leave-behind for the people who were in the room.</p>
     </section>
 
+    <section class="video-section reveal-in d1">
+      <div class="video-frame">
+        <iframe src="https://www.youtube.com/embed/0x5oy98h2Rk" title="OpenCLE - the night at Sora" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+    </section>
+
     <div class="divider reveal-in d1" aria-hidden="true">
       <div class="line full"></div>
     </div>
@@ -948,29 +979,29 @@
    Pond comfortably supports up to 100 entries.
    ============================================================ */
 const ATTENDEES = [
-  { name: "Shane Winnyk", title: "Co-Founder", linkedin: "", role: "Host-er", notes: "", offers: ["Introductions", "Collaboration", "Community"], needs: [], ties: [] },
+  { name: "Shane Winnyk", title: "Co-Founder", linkedin: "https://www.linkedin.com/in/shanewinnyk/", role: "Host-er", notes: "", offers: ["Introductions", "Collaboration", "Community"], needs: [], ties: [] },
   { name: "AJ Rosado", title: "Founder", linkedin: "https://www.linkedin.com/in/ajrosado/", role: "Show-er", notes: "", offers: [], needs: [], ties: [] },
   { name: "Gabrielle Fowlkes", title: "Creative", linkedin: "", role: "Know-er", notes: "", offers: ["Feedback", "Collaboration", "Mentorship", "Advice", "Introductions"], needs: ["Introductions", "Collaboration", "Advice", "Funding"], ties: ["Nelson Foster", "Noire Medspa", "Emily Kilgore"] },
   { name: "Emily Kilgore", title: "Founder", linkedin: "", role: "Know-er", notes: "", offers: ["Collaboration", "Introductions"], needs: ["Introductions", "Mentorship", "Feedback", "Advice", "Funding"], ties: ["Gabrielle Fowlkes", "Sarah Armenio", "Mike Wise"] },
-  { name: "Noire Medspa", title: "Founder", linkedin: "", role: "Know-er", notes: "", offers: ["Introductions", "Collaboration", "Hiring", "Advice"], needs: ["Introductions", "Feedback", "Collaboration", "Leads", "Funding"], ties: ["Gabrielle Fowlkes", "Afroze Hassan", "Nichole"] },
-  { name: "Sherita Carthon", title: "Designer", linkedin: "", role: "Know-er", notes: "", offers: ["Introductions in Investors", "Collaboration in Marketplaces", "Marketing in Gaming"], needs: ["Introductions in Marketplaces", "Collaboration in Marketplaces", "Funding in Pre-seed"], ties: ["Noire Medspa", "Nichole", "Nelson Foster"] },
-  { name: "Alysha Ellis", title: "Founder", linkedin: "https://www.linkedin.com/in/alysha-ellis-montgomery-462500128/", role: "Host-er", notes: "", offers: ["Introductions", "Collaboration"], needs: ["Feedback", "Funding"], ties: ["Nichole", "Howard Pincham", "Gabrielle Fowlkes"] },
+  { name: "Noire Medspa", title: "Founder", linkedin: "", role: "Know-er", notes: "", offers: ["Introductions", "Collaboration", "Hiring", "Advice"], needs: ["Introductions", "Feedback", "Collaboration", "Leads", "Funding"], ties: ["Gabrielle Fowlkes", "Afroze Hassan", "Nichole Collins"] },
+  { name: "Sherita Carthon", title: "Designer", linkedin: "", role: "Know-er", notes: "", offers: ["Introductions in Investors", "Collaboration in Marketplaces", "Marketing in Gaming"], needs: ["Introductions in Marketplaces", "Collaboration in Marketplaces", "Funding in Pre-seed"], ties: ["Noire Medspa", "Nichole Collins", "Nelson Foster"] },
+  { name: "Alysha Ellis", title: "Founder", linkedin: "https://www.linkedin.com/in/alysha-ellis-montgomery-462500128/", role: "Host-er", notes: "", offers: ["Introductions", "Collaboration"], needs: ["Feedback", "Funding"], ties: ["Nichole Collins", "Howard Pincham", "Gabrielle Fowlkes"] },
   { name: "Lamont Hamm", title: "Director", linkedin: "", role: "Know-er", notes: "", offers: ["Collaboration in Operators", "Marketing in B2B"], needs: ["Funding in Venture, Angel"], ties: ["Mike Wise", "Jason Williams", "Tyler Kohrt"] },
   { name: "Nicole Miller", title: "Writer", linkedin: "", role: "Know-er", notes: "", offers: [], needs: ["Funding"], ties: [] },
-  { name: "TK Kuykendall", title: "Founder", linkedin: "", role: "Know-er", notes: "", offers: ["Collaboration"], needs: ["Leads", "Feedback", "Funding"], ties: ["Sarah Armenio", "Nodira S", "Nichole"] },
+  { name: "TK Kuykendall", title: "Founder", linkedin: "", role: "Know-er", notes: "", offers: ["Collaboration"], needs: ["Leads", "Feedback", "Funding"], ties: ["Sarah Armenio", "Nodira S", "Nichole Collins"] },
   { name: "Nelson Foster", title: "Data Engineer", linkedin: "", role: "Know-er", notes: "", offers: ["Introductions in Marketplaces, Founders, Operators", "Advice in Leadership, Hiring advice", "Collaboration in Operators"], needs: ["Introductions in Founders, Partners, Marketplaces", "Networking in Marketplaces, Partners", "Mentorship in Product strategy", "Advice in Leadership", "Collaboration in Marketplaces"], ties: ["Gabrielle Fowlkes", "Ron Johnson", "Noire Medspa"] },
   { name: "Alicia Barnhart", title: "Creative", linkedin: "", role: "Know-er", notes: "", offers: ["Collaboration", "Leads", "Marketing", "Introductions", "Advice"], needs: ["Feedback", "Looking for work", "Collaboration", "Mentorship", "Networking"], ties: ["Gabrielle Fowlkes", "Noire Medspa", "Mike Wise"] },
   { name: "Mike Wise", title: "Founder", linkedin: "https://www.linkedin.com/in/mikewise07/", role: "Show-er", notes: "", offers: ["Introductions in Investors", "Advice in Leadership", "Mentorship in Product strategy", "Feedback in Product strategy", "Collaboration in Founders"], needs: ["Collaboration in Founders", "Marketing in B2B", "Networking in Investors"], ties: ["Nelson Foster", "Emily Kilgore", "Alicia Barnhart"] },
   { name: "Sarah Armenio", title: "Product", linkedin: "https://www.linkedin.com/in/saraharmenio/", role: "Show-er", notes: "", offers: ["Introductions", "Advice", "Mentorship", "Hiring", "Feedback"], needs: ["Collaboration", "Networking"], ties: ["Emily Kilgore", "Nelson Foster", "Alicia Barnhart"] },
   { name: "Daniel Criswell", title: "Attorney", linkedin: "", role: "Know-er", notes: "", offers: ["Introductions", "Leads", "Collaboration"], needs: [], ties: ["Noire Medspa", "Sherita Carthon", "Sachin Java"] },
-  { name: "Afroze Hassan", title: "Business Development", linkedin: "", role: "Know-er", notes: "", offers: ["Introductions", "Collaboration", "Feedback"], needs: ["Introductions", "Collaboration", "Looking for work"], ties: ["Noire Medspa", "Sherita Carthon", "Nichole"] },
-  { name: "Howard Pincham", title: "Engineer", linkedin: "", role: "Know-er", notes: "", offers: ["Feedback", "Introductions", "Design"], needs: ["Introductions", "Feedback", "Looking for work", "Collaboration", "Networking"], ties: ["Noire Medspa", "Nichole", "John Terwoord"] },
+  { name: "Afroze Hassan", title: "Business Development", linkedin: "", role: "Know-er", notes: "", offers: ["Introductions", "Collaboration", "Feedback"], needs: ["Introductions", "Collaboration", "Looking for work"], ties: ["Noire Medspa", "Sherita Carthon", "Nichole Collins"] },
+  { name: "Howard Pincham", title: "Engineer", linkedin: "", role: "Know-er", notes: "", offers: ["Feedback", "Introductions", "Design"], needs: ["Introductions", "Feedback", "Looking for work", "Collaboration", "Networking"], ties: ["Noire Medspa", "Nichole Collins", "John Terwoord"] },
   { name: "Nodira S", title: "Student", linkedin: "", role: "Know-er", notes: "", offers: ["Collaboration", "Feedback", "Advice"], needs: ["Mentorship", "Looking for work", "Collaboration", "Networking"], ties: ["Noire Medspa", "Gabrielle Fowlkes", "Tyler Kohrt"] },
   { name: "Ali Khater", title: "Intern", linkedin: "", role: "Know-er", notes: "", offers: ["Community"], needs: ["Networking", "Mentorship", "Collaboration", "Looking for work in Engineering"], ties: ["Tyler Kohrt", "Todd Gaebelein", "Sarah Armenio"] },
   { name: "Jason Williams", title: "Operator", linkedin: "", role: "Know-er", notes: "", offers: ["Marketing", "Collaboration", "Advice"], needs: ["Collaboration", "Looking for work", "Marketing"], ties: ["Sherita Carthon", "Noire Medspa", "Nelson Foster"] },
   { name: "Julia Szilvas", title: "Curious", linkedin: "", role: "Know-er", notes: "", offers: ["Introductions", "Mentorship"], needs: ["Networking", "Looking for work in Early-stage team"], ties: ["Ron Johnson", "Noire Medspa", "Nelson Foster"] },
-  { name: "Akshat Shah", title: "Engineer", linkedin: "", role: "Know-er", notes: "", offers: ["Collaboration", "Introductions", "Design", "Feedback"], needs: ["Introductions", "Collaboration", "Networking"], ties: ["Noire Medspa", "Sherita Carthon", "Nichole"] },
-  { name: "Nichole", title: "Advisor", linkedin: "", role: "Know-er", notes: "", offers: ["Introductions", "Collaboration", "Feedback"], needs: ["Introductions", "Collaboration", "Networking"], ties: ["Noire Medspa", "Sherita Carthon", "Nelson Foster"] },
+  { name: "Akshat Shah", title: "Engineer", linkedin: "", role: "Know-er", notes: "", offers: ["Collaboration", "Introductions", "Design", "Feedback"], needs: ["Introductions", "Collaboration", "Networking"], ties: ["Noire Medspa", "Sherita Carthon", "Nichole Collins"] },
+  { name: "Nichole Collins", title: "Advisor", linkedin: "", role: "Know-er", notes: "", offers: ["Introductions", "Collaboration", "Feedback"], needs: ["Introductions", "Collaboration", "Networking"], ties: ["Noire Medspa", "Sherita Carthon", "Nelson Foster"] },
   { name: "JJ Hepp", title: "Executive", linkedin: "", role: "Know-er", notes: "", offers: ["Introductions", "Feedback", "Advice", "Collaboration"], needs: ["Introductions", "Networking"], ties: ["Noire Medspa", "Nelson Foster", "Howard Pincham"] },
   { name: "John Terwoord", title: "Founder", linkedin: "", role: "Know-er", notes: "", offers: ["Introductions", "Advice", "Feedback", "Collaboration", "Fractional CFO"], needs: ["High-Growth Founders", "Fractional CFO", "AI for Finance", "Strategic Partnerships", "Introductions"], ties: ["Noire Medspa", "Nelson Foster", "Howard Pincham"] },
   { name: "Ron Johnson", title: "Founder", linkedin: "https://www.linkedin.com/in/rjohnsonjr/", role: "Show-er", notes: "", offers: ["Introductions", "Collaboration", "Design", "Mentorship", "Advice"], needs: ["Introductions", "Leads", "Networking", "Mentorship"], ties: ["Nelson Foster", "Gabrielle Fowlkes", "Emily Kilgore"] },
@@ -978,7 +1009,7 @@ const ATTENDEES = [
   { name: "Marissa Wilson", title: "Operator", linkedin: "https://www.linkedin.com/in/marissadwilson/", role: "Show-er", notes: "", offers: ["Collaboration", "Marketing", "Advice", "Introductions"], needs: ["Collaboration", "Networking", "Leads"], ties: ["Nelson Foster", "Gabrielle Fowlkes", "Sherita Carthon"] },
   { name: "Todd Gaebelein", title: "Designer", linkedin: "", role: "Know-er", notes: "", offers: ["Advice", "Introductions", "Mentorship", "Collaboration", "Feedback"], needs: [], ties: ["Nelson Foster", "Emily Kilgore", "Parimala Chowdary Alla"] },
   { name: "Sachin Java", title: "Advisor", linkedin: "", role: "Know-er", notes: "", offers: ["Introductions", "Advice", "Feedback"], needs: ["Introductions", "Leads", "Networking"], ties: ["Emily Kilgore", "Noire Medspa", "Nelson Foster"] },
-  { name: "Tyler Kohrt", title: "Co-Founder", linkedin: "", role: "Host-er", notes: "", offers: ["Introductions", "Mentorship", "Collaboration", "Community", "Big hugs"], needs: ["Collaboration", "Intros to builders/founders", "Big hugs"], ties: ["Nelson Foster", "Sherita Carthon", "Ron Johnson"] },
+  { name: "Tyler Kohrt", title: "Co-Founder", linkedin: "https://www.linkedin.com/in/tylerkohrt/", role: "Host-er", notes: "", offers: ["Introductions", "Mentorship", "Collaboration", "Community", "Big hugs"], needs: ["Collaboration", "Intros to builders/founders", "Big hugs"], ties: ["Nelson Foster", "Sherita Carthon", "Ron Johnson"] },
   { name: "Adin Aldaz", title: "Writer", linkedin: "", role: "Know-er", notes: "", offers: ["Marketing", "Design"], needs: ["Strategic Partnerships", "AI for Finance"], ties: ["Mike Wise", "Jason Williams"] },
   { name: "Candice Williams", title: "Founder", linkedin: "https://www.linkedin.com/in/-candicewilliams-/", role: "Show-er", notes: "", offers: ["Collaboration", "Mentorship", "Feedback"], needs: [], ties: ["Alicia Barnhart", "Parimala Chowdary Alla", "Noire Medspa"] },
   { name: "Devin Mony Thomas", title: "Engineer", linkedin: "", role: "Know-er", notes: "", offers: [], needs: ["Networking", "Mentorship"], ties: ["Tyler Kohrt", "Todd Gaebelein", "Sarah Armenio"] },
@@ -1045,7 +1076,7 @@ const ATTENDEES = [
 
   function makePetals() {
     petals = [];
-    const count = Math.min(130, Math.max(70, Math.floor((W * H) / 7200)));
+    const count = Math.min(110, Math.max(60, Math.floor((W * H) / 8600)));
     for (let i = 0; i < count; i++) {
       petals.push({
         x: Math.random() * W,
@@ -1126,7 +1157,7 @@ const ATTENDEES = [
       const dy = y - lastPointer.y;
       const vx = dx / dt; /* px per ms */
       /* horizontal swipe: fast x motion, dominantly horizontal */
-      if (Math.abs(vx) > 0.25 && Math.abs(dx) > Math.abs(dy) * 1.15) {
+      if (Math.abs(vx) > 0.12 && Math.abs(dx) > Math.abs(dy) * 0.8) {
         sweep(x, y, vx);
       }
     }
@@ -1134,7 +1165,7 @@ const ATTENDEES = [
   }
 
   function sweep(x, y, vx) {
-    const R = 95;
+    const R = 150;
     for (const p of petals) {
       if (p.gone || p.flying) continue;
       const dx = p.x - x, dy = p.y - y;
@@ -1202,7 +1233,7 @@ const ATTENDEES = [
       const r = clearedRatio();
       const remaining = petals.length - petals.filter(function (p) { return p.gone; }).length;
       progressEl.textContent = r > 0.02 ? Math.round(r * 100) + '% clear' : '';
-      if (r >= 0.86) unlock();
+      if (r >= 0.68) unlock();
     }
     rafId = requestAnimationFrame(frame);
   }
