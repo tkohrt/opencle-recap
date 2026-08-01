@@ -385,9 +385,8 @@
   .pond-sub .soda { color: var(--green-soft); }
   .pond-wrap {
     position: relative;
-    margin-top: 2.2rem;
+    margin-top: 3.4rem;
     border-radius: 26px;
-    overflow: hidden;
     border: 1px solid rgba(141, 255, 106, 0.14);
     box-shadow:
       0 0 0 1px rgba(255,255,255,0.03) inset,
@@ -396,6 +395,7 @@
   }
   #pondCanvas {
     display: block;
+    border-radius: 25px;
     width: 100%;
     height: clamp(420px, 62vh, 640px);
     cursor: default;
@@ -427,19 +427,129 @@
     font-size: 0.8rem;
   }
 
-  /* ============ ATTENDEE MODAL ============ */
-  .modal-overlay {
-    position: fixed; inset: 0;
-    background: rgba(5, 5, 8, 0.72);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 60;
-    padding: 24px;
+
+  /* ============ FEEDBACK SIGN + FEEDING ============ */
+  .feed-station {
+    position: absolute;
+    top: -17px; left: 22px; right: 20px;
+    z-index: 6;
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    pointer-events: none;
   }
-  .modal-overlay.open { display: flex; }
+  .feed-station > * { pointer-events: auto; }
+  .wood-sign {
+    position: relative;
+    transform: rotate(-6deg);
+    padding: 0.66rem 1.15rem 0.72rem;
+    border-radius: 12px;
+    border: 4px solid #5b3a17;
+    color: #fdeecb;
+    font-family: var(--serif);
+    text-align: center;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.4);
+    /* flat cartoon fill + a few wavy grain strokes and a knot */
+    background-color: #9a6733;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='90' viewBox='0 0 220 90'%3E%3Cg fill='none' stroke='%23553413' stroke-width='2' stroke-linecap='round' opacity='0.28'%3E%3Cpath d='M8 16 Q 60 10 105 16 T 212 14'/%3E%3Cpath d='M6 38 Q 50 33 92 39 Q 118 43 150 38 T 214 40'/%3E%3Cpath d='M10 62 Q 70 56 120 63 T 210 60'/%3E%3Cpath d='M14 80 Q 80 75 150 81 T 208 78'/%3E%3C/g%3E%3Cg opacity='0.3'%3E%3Cellipse cx='176' cy='26' rx='7' ry='5' fill='none' stroke='%23553413' stroke-width='2'/%3E%3Cellipse cx='176' cy='26' rx='2.5' ry='1.6' fill='%23553413'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 220px 90px;
+    box-shadow: 0 7px 16px rgba(0,0,0,0.5);
+  }
+  .wood-sign::before, .wood-sign::after {
+    content: '';
+    position: absolute;
+    top: 7px;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #efe8d6, #8d8674 60%, #57503f);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.55);
+  }
+  .wood-sign::before { left: 9px; }
+  .wood-sign::after { right: 9px; }
+  .wood-sign .l1 { display: block; font-weight: 600; font-size: 1.04rem; letter-spacing: 0.04em; }
+  .wood-sign .l2 { display: block; font-size: 0.8rem; font-style: italic; opacity: 0.92; margin-top: 0.1rem; }
+  .feed-form {
+    flex: 1;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 10px;
+    margin-top: 36px; /* drops the form just inside the pond's top edge */
+  }
+  #feedInput {
+    background: rgba(8, 12, 14, 0.74);
+    border: 1px solid rgba(255, 199, 221, 0.35);
+    border-radius: 999px;
+    padding: 0.55em 1.05em;
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 0.88rem;
+    flex: 1;
+    min-width: 0;
+    max-width: none;
+    outline: none;
+    transition: border-color 0.25s, box-shadow 0.25s;
+  }
+  #feedInput::placeholder { color: rgba(242,240,238,0.4); }
+  #feedInput:focus {
+    border-color: var(--pink);
+    box-shadow: 0 0 12px rgba(255, 61, 158, 0.35);
+  }
+  #feedInput.shake { animation: shakeX 0.4s ease; }
+  @keyframes shakeX {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-3px); }
+  }
+  #feedBtn {
+    background: var(--pink);
+    color: #17060e;
+    border: none;
+    border-radius: 999px;
+    padding: 0.55em 1.15em;
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 0.88rem;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    box-shadow: 0 0 14px rgba(255, 61, 158, 0.45);
+    transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+  }
+  #feedBtn:hover:not(:disabled) { transform: scale(1.05); box-shadow: 0 0 22px rgba(255, 61, 158, 0.7); }
+  #feedBtn:disabled, #feedInput:disabled { opacity: 0.45; cursor: default; }
+  .feed-toast {
+    position: absolute;
+    left: 50%; bottom: 20px;
+    transform: translate(-50%, 16px);
+    z-index: 8;
+    background: #f5efe3;
+    color: #2a2118;
+    border: 1px solid #d9a13c;
+    border-radius: 14px;
+    padding: 0.95rem 1.35rem;
+    max-width: min(540px, 88%);
+    font-size: 0.94rem;
+    line-height: 1.5;
+    text-align: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.7s ease, transform 0.7s ease;
+    box-shadow: 0 12px 34px rgba(0,0,0,0.45);
+  }
+  .feed-toast.show { opacity: 1; transform: translate(-50%, 0); }
+  .feed-toast small { display: block; margin-top: 0.4rem; color: #6d5a3a; }
+  @media (max-width: 620px) {
+    .feed-station { top: -14px; left: 12px; right: 12px; flex-direction: column; gap: 0; }
+    .wood-sign { padding: 0.5rem 0.85rem 0.55rem; align-self: flex-start; }
+    .wood-sign .l1 { font-size: 0.92rem; }
+    .wood-sign .l2 { font-size: 0.72rem; }
+    .feed-form { margin-top: 12px; margin-left: 2px; width: 100%; }
+    #feedInput { font-size: 0.84rem; }
+    #feedBtn { font-size: 0.82rem; padding: 0.5em 0.95em; }
+  }
+
+  /* ============ ATTENDEE MODAL ============ */
   .modal {
     background: linear-gradient(160deg, #16161c, #101015);
     border: 1px solid rgba(255, 61, 158, 0.35);
@@ -498,6 +608,42 @@
     border-bottom: 1px dashed rgba(141,255,106,0.4);
   }
   .modal .m-link a:hover { color: var(--green); }
+  .modal .m-list { margin-top: 1.05rem; }
+  .modal .m-list .label, .modal .m-ties .label {
+    display: block;
+    font-size: 0.62rem;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--green-soft);
+    margin-bottom: 0.4rem;
+  }
+  .modal .m-list.needs .label { color: var(--pink-soft); }
+  .modal .m-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .modal .m-chips .chip2 {
+    display: inline-block;
+    font-size: 0.74rem;
+    padding: 0.22em 0.75em;
+    border-radius: 999px;
+    background: rgba(141, 255, 106, 0.08);
+    border: 1px solid rgba(141, 255, 106, 0.25);
+    color: #d9ffd0;
+  }
+  .modal .m-list.needs .chip2 {
+    background: rgba(255, 61, 158, 0.08);
+    border-color: rgba(255, 61, 158, 0.3);
+    color: #ffd9ea;
+  }
+  .modal .m-ties { margin-top: 1.05rem; }
+  .modal .m-ties .tie-link {
+    display: inline-block;
+    margin: 0 10px 4px 0;
+    color: var(--gold);
+    cursor: pointer;
+    border-bottom: 1px dashed rgba(255, 210, 122, 0.45);
+    font-size: 0.9rem;
+  }
+  .modal .m-ties .tie-link:hover { color: #ffe6ae; text-shadow: 0 0 8px rgba(255,210,122,0.6); }
+  .modal .m-none { color: rgba(242,240,238,0.35); font-size: 0.85rem; font-style: italic; }
   .modal .m-notes {
     margin-top: 1.2rem;
     background: rgba(255, 199, 221, 0.05);
@@ -515,6 +661,70 @@
     color: var(--pink-soft);
     margin-bottom: 0.35rem;
   }
+
+
+  /* ============ DOCKED PROFILE CARD ============ */
+  .profile-dock {
+    display: none;
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translate(-50%, 70%); /* 30%% in the pond, 70%% out */
+    width: min(600px, 94%);
+    z-index: 7;
+    animation: none;
+  }
+  .profile-dock.open {
+    display: block;
+    animation: dockIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes modalInCentered {
+    from { opacity: 0; transform: translate(-50%, calc(-50% + 18px)) scale(0.97); }
+    to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  }
+  @keyframes dockIn {
+    from { opacity: 0; transform: translate(-50%, 76%); }
+    to   { opacity: 1; transform: translate(-50%, 70%); }
+  }
+  .dock-backdrop { display: none; }
+  .pond-wrap { transition: margin-bottom 0.35s ease; }
+  .koi-tip {
+    position: absolute;
+    z-index: 9;
+    display: none;
+    pointer-events: none;
+    background: rgba(8, 10, 12, 0.88);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.28em 0.85em;
+    border-radius: 999px;
+    white-space: nowrap;
+    transform: translateX(-50%);
+  }
+  @media (max-width: 700px) {
+    .profile-dock {
+      position: fixed;
+      left: 50%; top: 50%; bottom: auto;
+      transform: translate(-50%, -50%);
+      width: min(430px, calc(100% - 32px));
+      z-index: 70;
+      max-height: 84vh;
+      overflow-y: auto;
+    }
+    .profile-dock.open { animation: modalInCentered 0.35s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    .dock-backdrop.show {
+      display: block;
+      position: fixed; inset: 0;
+      background: rgba(5, 5, 8, 0.72);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 60;
+    }
+  }
+  .reveal-done { animation: none !important; transform: none !important; opacity: 1 !important; }
 
   /* ============ QUOTE ============ */
   .quote-section {
@@ -656,6 +866,42 @@
 
       <div class="pond-wrap">
         <canvas id="pondCanvas" aria-label="Interactive koi pond. Each koi is an attendee — click a koi to see who they are."></canvas>
+        <div class="feed-station">
+          <div class="wood-sign">
+            <span class="l1">Share feedback on OpenCLE</span>
+            <span class="l2">- it feeds the fish</span>
+          </div>
+          <form id="feedForm" class="feed-form" autocomplete="off">
+            <input id="feedInput" type="text" maxlength="600" placeholder="Toss in a thought..." aria-label="Share your feedback">
+            <button id="feedBtn" type="submit">Submit</button>
+          </form>
+        </div>
+        <div class="feed-toast" id="feedToast" role="status" aria-live="polite"></div>
+        <div class="koi-tip" id="koiTip" aria-hidden="true"></div>
+        <div class="dock-backdrop" id="dockBackdrop"></div>
+        <div class="modal profile-dock" id="profileDock" role="dialog" aria-labelledby="modalName">
+          <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
+    <span class="role-tag" id="modalRole"></span>
+    <h3 id="modalName"></h3>
+    <div class="m-title" id="modalTitle"></div>
+    <div class="m-link" id="modalLink"></div>
+    <div class="m-list" id="modalOffersWrap">
+      <span class="label">Offers</span>
+      <span class="m-chips" id="modalOffers"></span>
+    </div>
+    <div class="m-list needs" id="modalNeedsWrap">
+      <span class="label">Needs</span>
+      <span class="m-chips" id="modalNeeds"></span>
+    </div>
+    <div class="m-ties" id="modalTiesWrap">
+      <span class="label">Strongest ties</span>
+      <span id="modalTies"></span>
+    </div>
+    <div class="m-notes" id="modalNotesWrap">
+      <span class="label">From the post-event survey</span>
+      <span id="modalNotes"></span>
+    </div>
+        </div>
       </div>
 
       <div class="pond-legend">
@@ -686,20 +932,7 @@
   </div>
 </main>
 
-<!-- ================= ATTENDEE MODAL ================= -->
-<div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalName">
-  <div class="modal">
-    <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
-    <span class="role-tag" id="modalRole"></span>
-    <h3 id="modalName"></h3>
-    <div class="m-title" id="modalTitle"></div>
-    <div class="m-link" id="modalLink"></div>
-    <div class="m-notes" id="modalNotesWrap">
-      <span class="label">From the post-event survey</span>
-      <span id="modalNotes"></span>
-    </div>
-  </div>
-</div>
+<!-- attendee profile card markup lives docked inside the pond -->
 
 <script>
 /* ==========================================================================
@@ -714,49 +947,74 @@
    Pond comfortably supports up to 100 entries.
    ============================================================ */
 const ATTENDEES = [
-  {
-    name: "Tyler Kohrt",
-    title: "Co-Founder & CEO, For Granted",
-    linkedin: "https://www.linkedin.com/in/tylerkohrt",
-    role: "Host-er",
-    notes: "[Post-survey notes go here]"
-  },
-  {
-    name: "Shane Winnyk",
-    title: "Co-Founder & Chief Relationships Officer, For Granted",
-    linkedin: "https://www.linkedin.com/in/shanewinnyk",
-    role: "Host-er",
-    notes: "[Post-survey notes go here]"
-  },
-  {
-    name: "Futureland Team",
-    title: "Convene · Connect · Build — Futureland CLE",
-    linkedin: "https://www.futurelandcle.com",
-    role: "Host-er",
-    notes: "[Post-survey notes go here]"
-  },
-  {
-    name: "Sample Show-er",
-    title: "Founder, [Company] — demoed [project]",
-    linkedin: "https://www.linkedin.com/",
-    role: "Show-er",
-    notes: "[What they demoed + survey notes go here]"
-  },
-  {
-    name: "Sample Know-er",
-    title: "[Job title], [Organization]",
-    linkedin: "https://www.linkedin.com/",
-    role: "Know-er",
-    notes: "[Post-survey notes go here]"
-  },
-  {
-    name: "Sample Know-er II",
-    title: "[Job title], [Organization]",
-    linkedin: "https://www.linkedin.com/",
-    role: "Know-er",
-    notes: "[Post-survey notes go here]"
-  }
+  { name: "Shane Winnyk", title: "Co-Founder", linkedin: "", role: "Host-er", notes: "", offers: ["Introductions", "Collaboration", "Community"], needs: [], ties: [] },
+  { name: "AJ Rosado", title: "Founder", linkedin: "https://www.linkedin.com/in/ajrosado/", role: "Show-er", notes: "", offers: [], needs: [], ties: [] },
+  { name: "Gabrielle Fowlkes", title: "Creative", linkedin: "", role: "Know-er", notes: "", offers: ["Feedback", "Collaboration", "Mentorship", "Advice", "Introductions"], needs: ["Introductions", "Collaboration", "Advice", "Funding"], ties: ["Nelson Foster", "Noire Medspa", "Emily Kilgore"] },
+  { name: "Emily Kilgore", title: "Founder", linkedin: "", role: "Know-er", notes: "", offers: ["Collaboration", "Introductions"], needs: ["Introductions", "Mentorship", "Feedback", "Advice", "Funding"], ties: ["Gabrielle Fowlkes", "Sarah Armenio", "Mike Wise"] },
+  { name: "Noire Medspa", title: "Founder", linkedin: "", role: "Know-er", notes: "", offers: ["Introductions", "Collaboration", "Hiring", "Advice"], needs: ["Introductions", "Feedback", "Collaboration", "Leads", "Funding"], ties: ["Gabrielle Fowlkes", "Afroze Hassan", "Nichole"] },
+  { name: "Sherita Carthon", title: "Designer", linkedin: "", role: "Know-er", notes: "", offers: ["Introductions in Investors", "Collaboration in Marketplaces", "Marketing in Gaming"], needs: ["Introductions in Marketplaces", "Collaboration in Marketplaces", "Funding in Pre-seed"], ties: ["Noire Medspa", "Nichole", "Nelson Foster"] },
+  { name: "Alysha Ellis", title: "Founder", linkedin: "", role: "Host-er", notes: "", offers: ["Introductions", "Collaboration"], needs: ["Feedback", "Funding"], ties: ["Nichole", "Howard Pincham", "Gabrielle Fowlkes"] },
+  { name: "Lamont Hamm", title: "Director", linkedin: "", role: "Know-er", notes: "", offers: ["Collaboration in Operators", "Marketing in B2B"], needs: ["Funding in Venture, Angel"], ties: ["Mike Wise", "Jason Williams", "Tyler Kohrt"] },
+  { name: "Nicole Miller", title: "Writer", linkedin: "", role: "Know-er", notes: "", offers: [], needs: ["Funding"], ties: [] },
+  { name: "TK Kuykendall", title: "Founder", linkedin: "", role: "Know-er", notes: "", offers: ["Collaboration"], needs: ["Leads", "Feedback", "Funding"], ties: ["Sarah Armenio", "Nodira S", "Nichole"] },
+  { name: "Nelson Foster", title: "Data Engineer", linkedin: "", role: "Know-er", notes: "", offers: ["Introductions in Marketplaces, Founders, Operators", "Advice in Leadership, Hiring advice", "Collaboration in Operators"], needs: ["Introductions in Founders, Partners, Marketplaces", "Networking in Marketplaces, Partners", "Mentorship in Product strategy", "Advice in Leadership", "Collaboration in Marketplaces"], ties: ["Gabrielle Fowlkes", "Ron Johnson", "Noire Medspa"] },
+  { name: "Alicia Barnhart", title: "Creative", linkedin: "", role: "Know-er", notes: "", offers: ["Collaboration", "Leads", "Marketing", "Introductions", "Advice"], needs: ["Feedback", "Looking for work", "Collaboration", "Mentorship", "Networking"], ties: ["Gabrielle Fowlkes", "Noire Medspa", "Mike Wise"] },
+  { name: "Mike Wise", title: "Founder", linkedin: "", role: "Show-er", notes: "", offers: ["Introductions in Investors", "Advice in Leadership", "Mentorship in Product strategy", "Feedback in Product strategy", "Collaboration in Founders"], needs: ["Collaboration in Founders", "Marketing in B2B", "Networking in Investors"], ties: ["Nelson Foster", "Emily Kilgore", "Alicia Barnhart"] },
+  { name: "Sarah Armenio", title: "Product", linkedin: "", role: "Show-er", notes: "", offers: ["Introductions", "Advice", "Mentorship", "Hiring", "Feedback"], needs: ["Collaboration", "Networking"], ties: ["Emily Kilgore", "Nelson Foster", "Alicia Barnhart"] },
+  { name: "Daniel Criswell", title: "Attorney", linkedin: "", role: "Know-er", notes: "", offers: ["Introductions", "Leads", "Collaboration"], needs: [], ties: ["Noire Medspa", "Sherita Carthon", "Sachin Java"] },
+  { name: "Afroze Hassan", title: "Business Development", linkedin: "", role: "Know-er", notes: "", offers: ["Introductions", "Collaboration", "Feedback"], needs: ["Introductions", "Collaboration", "Looking for work"], ties: ["Noire Medspa", "Sherita Carthon", "Nichole"] },
+  { name: "Howard Pincham", title: "Engineer", linkedin: "", role: "Know-er", notes: "", offers: ["Feedback", "Introductions", "Design"], needs: ["Introductions", "Feedback", "Looking for work", "Collaboration", "Networking"], ties: ["Noire Medspa", "Nichole", "John Terwoord"] },
+  { name: "Nodira S", title: "Student", linkedin: "", role: "Know-er", notes: "", offers: ["Collaboration", "Feedback", "Advice"], needs: ["Mentorship", "Looking for work", "Collaboration", "Networking"], ties: ["Noire Medspa", "Gabrielle Fowlkes", "Tyler Kohrt"] },
+  { name: "Ali Khater", title: "Intern", linkedin: "", role: "Know-er", notes: "", offers: ["Community"], needs: ["Networking", "Mentorship", "Collaboration", "Looking for work in Engineering"], ties: ["Tyler Kohrt", "Todd Gaebelein", "Sarah Armenio"] },
+  { name: "Jason Williams", title: "Operator", linkedin: "", role: "Know-er", notes: "", offers: ["Marketing", "Collaboration", "Advice"], needs: ["Collaboration", "Looking for work", "Marketing"], ties: ["Sherita Carthon", "Noire Medspa", "Nelson Foster"] },
+  { name: "Julia Szilvas", title: "Curious", linkedin: "", role: "Know-er", notes: "", offers: ["Introductions", "Mentorship"], needs: ["Networking", "Looking for work in Early-stage team"], ties: ["Ron Johnson", "Noire Medspa", "Nelson Foster"] },
+  { name: "Akshat Shah", title: "Engineer", linkedin: "", role: "Know-er", notes: "", offers: ["Collaboration", "Introductions", "Design", "Feedback"], needs: ["Introductions", "Collaboration", "Networking"], ties: ["Noire Medspa", "Sherita Carthon", "Nichole"] },
+  { name: "Nichole", title: "Advisor", linkedin: "", role: "Know-er", notes: "", offers: ["Introductions", "Collaboration", "Feedback"], needs: ["Introductions", "Collaboration", "Networking"], ties: ["Noire Medspa", "Sherita Carthon", "Nelson Foster"] },
+  { name: "JJ Hepp", title: "Executive", linkedin: "", role: "Know-er", notes: "", offers: ["Introductions", "Feedback", "Advice", "Collaboration"], needs: ["Introductions", "Networking"], ties: ["Noire Medspa", "Nelson Foster", "Howard Pincham"] },
+  { name: "John Terwoord", title: "Founder", linkedin: "", role: "Know-er", notes: "", offers: ["Introductions", "Advice", "Feedback", "Collaboration", "Fractional CFO"], needs: ["High-Growth Founders", "Fractional CFO", "AI for Finance", "Strategic Partnerships", "Introductions"], ties: ["Noire Medspa", "Nelson Foster", "Howard Pincham"] },
+  { name: "Ron Johnson", title: "Founder", linkedin: "", role: "Show-er", notes: "", offers: ["Introductions", "Collaboration", "Design", "Mentorship", "Advice"], needs: ["Introductions", "Leads", "Networking", "Mentorship"], ties: ["Nelson Foster", "Gabrielle Fowlkes", "Emily Kilgore"] },
+  { name: "Brent Montgomery", title: "Founder", linkedin: "", role: "Host-er", notes: "", offers: ["Introductions", "Feedback in Early-stage, AI Start Ups"], needs: ["Advice", "Mentorship", "Introductions in VC World, Early-stage"], ties: ["Ron Johnson", "Noire Medspa", "Gabrielle Fowlkes"] },
+  { name: "Marissa Wilson", title: "Operator", linkedin: "", role: "Show-er", notes: "", offers: ["Collaboration", "Marketing", "Advice", "Introductions"], needs: ["Collaboration", "Networking", "Leads"], ties: ["Nelson Foster", "Gabrielle Fowlkes", "Sherita Carthon"] },
+  { name: "Todd Gaebelein", title: "Designer", linkedin: "", role: "Know-er", notes: "", offers: ["Advice", "Introductions", "Mentorship", "Collaboration", "Feedback"], needs: [], ties: ["Nelson Foster", "Emily Kilgore", "Parimala Chowdary Alla"] },
+  { name: "Sachin Java", title: "Advisor", linkedin: "", role: "Know-er", notes: "", offers: ["Introductions", "Advice", "Feedback"], needs: ["Introductions", "Leads", "Networking"], ties: ["Emily Kilgore", "Noire Medspa", "Nelson Foster"] },
+  { name: "Tyler Kohrt", title: "Co-Founder", linkedin: "", role: "Host-er", notes: "", offers: ["Introductions", "Mentorship", "Collaboration", "Community", "Big hugs"], needs: ["Collaboration", "Intros to builders/founders", "Big hugs"], ties: ["Nelson Foster", "Sherita Carthon", "Ron Johnson"] },
+  { name: "Adin Aldaz", title: "Writer", linkedin: "", role: "Know-er", notes: "", offers: ["Marketing", "Design"], needs: ["Strategic Partnerships", "AI for Finance"], ties: ["Mike Wise", "Jason Williams"] },
+  { name: "Candice Williams", title: "Founder", linkedin: "", role: "Show-er", notes: "", offers: ["Collaboration", "Mentorship", "Feedback"], needs: [], ties: ["Alicia Barnhart", "Parimala Chowdary Alla", "Noire Medspa"] },
+  { name: "Devin Mony Thomas", title: "Engineer", linkedin: "", role: "Know-er", notes: "", offers: [], needs: ["Networking", "Mentorship"], ties: ["Tyler Kohrt", "Todd Gaebelein", "Sarah Armenio"] },
+  { name: "Ivor Kiwi", title: "Operator", linkedin: "", role: "Know-er", notes: "", offers: ["Collaboration", "Mentorship"], needs: ["Collaboration"], ties: ["Nodira S", "Nelson Foster", "Alicia Barnhart"] },
+  { name: "Kristen Hepp", title: "Formerly ran an Analytics team, now SAHM", linkedin: "", role: "Know-er", notes: "", offers: ["Community"], needs: [], ties: [] },
+  { name: "Laurel Paul", title: "Data Analyst , Intern and student", linkedin: "", role: "Know-er", notes: "", offers: ["Community"], needs: ["Mentorship", "Networking", "Collaboration", "Big hugs"], ties: ["Tyler Kohrt", "Todd Gaebelein", "Ron Johnson"] },
+  { name: "Parimala Chowdary Alla", title: "Engineer", linkedin: "", role: "Know-er", notes: "", offers: [], needs: ["Networking", "Advice", "Collaboration", "Mentorship"], ties: ["Todd Gaebelein", "Ron Johnson", "Mike Wise"] },
+  { name: "Rebecca Kuykendall", title: "Support", linkedin: "", role: "Know-er", notes: "", offers: ["Feedback"], needs: [], ties: ["TK Kuykendall", "Noire Medspa", "Howard Pincham"] },
+  { name: "Cole Zehe", title: "Engineer", linkedin: "", role: "Know-er", notes: "", offers: [], needs: [], ties: [] },
+  { name: "Crystal Thies", title: "Founder", linkedin: "", role: "Know-er", notes: "", offers: [], needs: [], ties: [] },
+  { name: "David Kogovsek", title: "Engineer", linkedin: "", role: "Know-er", notes: "", offers: [], needs: [], ties: [] },
+  { name: "Ethan Fritz", title: "Engineer", linkedin: "", role: "Know-er", notes: "", offers: [], needs: [], ties: [] },
+  { name: "Grant Konkel", title: "Engineer", linkedin: "", role: "Know-er", notes: "", offers: [], needs: [], ties: [] },
+  { name: "Ismael Adedoyin", title: "Software developer", linkedin: "", role: "Know-er", notes: "", offers: [], needs: [], ties: [] },
+  { name: "Matthew Fieldman", title: "Founder", linkedin: "", role: "Know-er", notes: "", offers: [], needs: [], ties: [] },
+  { name: "Nabih Metri", title: "Product", linkedin: "", role: "Know-er", notes: "", offers: [], needs: [], ties: [] },
+  { name: "Ty McCort", title: "Intern", linkedin: "", role: "Know-er", notes: "", offers: [], needs: [], ties: [] }
 ];
+
+/* Preview helper: append ?demo=80 to the URL to preview a crowded pond
+   with placeholder koi. Has no effect without the parameter. */
+(function () {
+  const n = parseInt(new URLSearchParams(location.search).get('demo'), 10);
+  if (n > 0) {
+    const roles = ['Know-er', 'Know-er', 'Know-er', 'Show-er', 'Host-er'];
+    for (let i = ATTENDEES.length; i < Math.min(n, 100); i++) {
+      ATTENDEES.push({
+        name: 'Demo Attendee ' + (i + 1),
+        title: '[Job title], [Organization]',
+        linkedin: '',
+        role: roles[i % roles.length],
+        notes: '[Post-survey notes go here]',
+        offers: [], needs: [], ties: []
+      });
+    }
+  }
+})();
 
 /* ============================================================
    1) BLOSSOM GATE
@@ -991,25 +1249,126 @@ var startPond = (function () {
       'Know-er': { body: '#f7f7f5', patch: '#e8623a', fin: 'rgba(255, 255, 255, 0.45)', glow: 'rgba(255, 255, 255, 0.25)' }
     };
 
-    /* koi size scales down as the pond fills (supports ~100) */
+    /* koi size scales with headcount AND available water (supports ~100,
+       including small phone ponds) */
     function koiLength(count) {
-      if (count <= 12) return 52;
-      if (count <= 30) return 44;
-      if (count <= 60) return 36;
-      return 30;
+      let base;
+      if (count <= 12) base = 52;
+      else if (count <= 30) base = 44;
+      else if (count <= 60) base = 36;
+      else base = 30;
+      const areaScale = Math.sqrt((W * H) / (1030 * 560)); /* 1.0 = desktop pond */
+      return Math.max(20, Math.min(base, base * areaScale * 1.15));
     }
 
     let koiList = [];
     let ripples = [];
     let hoverKoi = null;
 
+    /* --- tie web state --- */
+    let tieEdges = [];
+    let lockedKoi = null; /* koi locked by click; persists until another koi is clicked */
+    function buildTieEdges() {
+      tieEdges = [];
+      const byName = {};
+      koiList.forEach(function (k, i) { byName[k.data.name] = i; });
+      const seen = new Set();
+      koiList.forEach(function (k, i) {
+        (k.data.ties || []).forEach(function (tn) {
+          const j = byName[tn];
+          if (j === undefined || j === i) return;
+          const key = Math.min(i, j) + '-' + Math.max(i, j);
+          if (seen.has(key)) return;
+          seen.add(key);
+          tieEdges.push({ a: i, b: j, phase: Math.random() * Math.PI * 2 });
+        });
+      });
+    }
+
+    /* dynamic tie threads: gentle underwater curves that follow the koi.
+       All ties glow faintly; hovering or opening a koi's profile lights
+       that koi's threads and dims the rest. */
+    function drawTies(t) {
+      if (!tieEdges.length) return;
+      const fA = lockedKoi ? koiList.indexOf(lockedKoi) : -1;
+      const fB = hoverKoi ? koiList.indexOf(hoverKoi) : -1;
+      const anyFocus = fA >= 0 || fB >= 0;
+      ctx.save();
+      ctx.lineCap = 'round';
+      for (const e of tieEdges) {
+        const A = koiList[e.a], B = koiList[e.b];
+        const focused = (fA >= 0 && (fA === e.a || fA === e.b)) ||
+                        (fB >= 0 && (fB === e.a || fB === e.b));
+        const base = !anyFocus ? 0.09 : (focused ? 0.6 : 0.035);
+        const dx = B.x - A.x, dy = B.y - A.y;
+        const len = Math.hypot(dx, dy) || 1;
+        /* slack curve that sways like a thread in water */
+        const sway = Math.sin(t * 0.0011 + e.phase) * Math.min(20, len * 0.09)
+                   + Math.min(14, len * 0.05); /* slight constant sag */
+        const cx = (A.x + B.x) / 2 - (dy / len) * sway;
+        const cy = (A.y + B.y) / 2 + (dx / len) * sway;
+        if (focused) {
+          /* glow underlay */
+          ctx.strokeStyle = 'rgba(255, 61, 158, 0.16)';
+          ctx.lineWidth = 5;
+          ctx.beginPath();
+          ctx.moveTo(A.x, A.y);
+          ctx.quadraticCurveTo(cx, cy, B.x, B.y);
+          ctx.stroke();
+        }
+        ctx.strokeStyle = focused
+          ? 'rgba(255, 150, 200, ' + base + ')'
+          : 'rgba(255, 199, 221, ' + base + ')';
+        ctx.lineWidth = focused ? 1.7 : 1;
+        ctx.beginPath();
+        ctx.moveTo(A.x, A.y);
+        ctx.quadraticCurveTo(cx, cy, B.x, B.y);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    /* --- feeding state --- */
+    let pellets = [];
+    let feedPhase = 'idle';      /* idle | feeding | disperse */
+    let feedStartAt = 0;
+    let disperseUntil = 0;
+    let emailStatus = 'pending'; /* pending | ok | failed */
+
+    /* --- keep-out zone under the wooden sign --- */
+    let signZone = null;
+    function computeSignZone() {
+      const se = document.querySelector('.wood-sign');
+      if (!se) { signZone = null; return; }
+      const sr = se.getBoundingClientRect();
+      const cr = canvas.getBoundingClientRect();
+      if (!cr.width) { signZone = null; return; }
+      const x1 = Math.max(0, sr.left - cr.left - 10);
+      const y1 = Math.max(0, sr.top - cr.top - 10);
+      const x2 = Math.min(W, sr.right - cr.left + 10);
+      const y2 = Math.min(H, sr.bottom - cr.top + 10);
+      signZone = (x2 > x1 && y2 > y1) ? { x1: x1, y1: y1, x2: x2, y2: y2 } : null;
+    }
+
+    function targetHeight() {
+      let base = Math.max(420, Math.min(0.62 * window.innerHeight, 640));
+      const wpx = canvas.clientWidth || 0;
+      if (wpx && wpx < 700) {
+        /* narrow pond: add water as the population climbs past 30 */
+        base += Math.min(340, Math.max(0, ATTENDEES.length - 30) * 4.5);
+      }
+      return Math.round(base);
+    }
+
     function resize() {
       dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.style.height = targetHeight() + 'px';
       W = canvas.clientWidth;
       H = canvas.clientHeight;
       canvas.width = W * dpr;
       canvas.height = H * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      computeSignZone();
     }
 
     function makeKoi() {
@@ -1027,10 +1386,20 @@ var startPond = (function () {
           speed: 0.22 + Math.random() * 0.18,
           turn: 0,
           phase: Math.random() * Math.PI * 2,
-          len: L * (0.92 + Math.random() * 0.18),
+          lenVar: 0.92 + Math.random() * 0.18,
+          len: 0, /* set below from lenVar */
+          speedMul: 1,
+          wigT: Math.random() * 6,
+          jitter: (Math.random() - 0.5),
+          disperseHeading: 0,
           patches: makePatches()
         };
       });
+      for (const k of koiList) k.len = L * k.lenVar;
+      buildTieEdges();
+      window.__koiPositions = function () {
+        return koiList.map(function (k) { return { x: k.x, y: k.y, len: k.len }; });
+      };
     }
 
     function makePatches() {
@@ -1081,12 +1450,23 @@ var startPond = (function () {
         ctx.ellipse(r.x, r.y, r.r, r.r * 0.6, 0, 0, Math.PI * 2);
         ctx.stroke();
       }
-      if (Math.random() < 0.02 && ripples.length < 7) {
-        ripples.push({ x: Math.random() * W, y: Math.random() * H, r: 2, vr: 0.35, a: 0.16 });
+      const ambP = feedPhase === 'feeding' ? 0.10 : 0.02;
+      const ambCap = feedPhase === 'feeding' ? 42 : 7;
+      if (Math.random() < ambP && ripples.length < ambCap) {
+        let rx = Math.random() * W, ry = Math.random() * H;
+        if (feedPhase === 'feeding') {
+          rx = W / 2 + (Math.random() - 0.5) * 330;
+          ry = H / 2 + (Math.random() - 0.5) * 230;
+        }
+        ripples.push({ x: rx, y: ry, r: 2, vr: 0.3 + Math.random() * 0.35, a: 0.13 + Math.random() * 0.09 });
       }
 
-      /* corner lily pads */
-      drawLily(W * 0.075, H * 0.12, 34, t);
+    }
+
+    function drawLilies(t) {
+      /* drawn after the koi so fish pass underneath; kept translucent so
+         they stay visible through the pad */
+      drawLily(W * 0.065, H * 0.46, 34, t);
       drawLily(W * 0.93, H * 0.85, 42, t);
       drawLily(W * 0.885, H * 0.16, 24, t);
     }
@@ -1095,7 +1475,7 @@ var startPond = (function () {
       ctx.save();
       ctx.translate(x + Math.sin(t * 0.0004 + x) * 2, y);
       ctx.rotate(0.3 + Math.sin(x) * 0.5);
-      ctx.fillStyle = 'rgba(38, 84, 55, 0.9)';
+      ctx.fillStyle = 'rgba(44, 96, 63, 0.52)';
       ctx.beginPath();
       ctx.arc(0, 0, r, 0.25, Math.PI * 2 - 0.25);
       ctx.lineTo(0, 0);
@@ -1110,8 +1490,8 @@ var startPond = (function () {
     /* --- koi --- */
     function drawKoi(k, t, isHover) {
       const style = ROLE_STYLE[k.data.role] || ROLE_STYLE['Know-er'];
-      const wig = Math.sin(t * 0.004 + k.phase);
-      const tailWig = Math.sin(t * 0.004 + k.phase - 1.2);
+      const wig = Math.sin(k.wigT + k.phase);
+      const tailWig = Math.sin(k.wigT + k.phase - 1.2);
       const L = k.len, Wd = L * 0.34;
 
       ctx.save();
@@ -1209,27 +1589,98 @@ var startPond = (function () {
       ctx.restore();
     }
 
+    function nearestPellet(k) {
+      let best = null, bd = Infinity;
+      for (const p of pellets) {
+        if (!p.alive || !p.landed) continue;
+        const d = (p.x - k.x) * (p.x - k.x) + (p.y - k.y) * (p.y - k.y);
+        if (d < bd) { bd = d; best = p; }
+      }
+      return best;
+    }
+
     function stepKoi(k) {
       /* gentle wander */
       k.turn += (Math.random() - 0.5) * 0.012;
       k.turn *= 0.92;
 
-      /* boundary steering — always keep koi comfortably on screen */
-      const margin = k.len * 1.1;
-      let steer = 0;
-      if (k.x < margin) steer = angleSteer(k.heading, 0);
-      else if (k.x > W - margin) steer = angleSteer(k.heading, Math.PI);
-      if (k.y < margin) steer += angleSteer(k.heading, Math.PI / 2);
-      else if (k.y > H - margin) steer += angleSteer(k.heading, -Math.PI / 2);
+      /* --- feeding behavior --- */
+      let steerToward = 0, gain = 0, targetMul = 1;
+      if (feedPhase === 'feeding') {
+        const p = nearestPellet(k);
+        if (p) {
+          const d = Math.hypot(p.x - k.x, p.y - k.y);
+          const want = Math.atan2(p.y - k.y, p.x - k.x) + k.jitter * 0.25;
+          steerToward = angleSteer(k.heading, want);
+          gain = 0.15;
+          targetMul = d > 130 ? 4.6 : (d > 45 ? 2.7 : 1.5);
+          /* nibble when the nose reaches the pellet */
+          const nx = k.x + Math.cos(k.heading) * k.len * 0.5;
+          const ny = k.y + Math.sin(k.heading) * k.len * 0.5;
+          if (Math.hypot(p.x - nx, p.y - ny) < Math.max(10, k.len * 0.32)) {
+            p.size -= 0.055 + Math.random() * 0.04;
+            if (Math.random() < 0.12 && ripples.length < 60) {
+              ripples.push({ x: p.x, y: p.y, r: 2, vr: 0.5, a: 0.22 });
+            }
+            if (p.size <= 0.6) {
+              p.alive = false;
+              if (ripples.length < 60) ripples.push({ x: p.x, y: p.y, r: 3, vr: 0.7, a: 0.3 });
+            }
+          }
+        } else {
+          /* pellets airborne or momentarily gone — mill about excitedly */
+          targetMul = 1.7;
+        }
+      } else if (feedPhase === 'disperse') {
+        steerToward = angleSteer(k.heading, k.disperseHeading);
+        gain = 0.045;
+        targetMul = 1.6;
+      }
+      k.speedMul += (targetMul - k.speedMul) * 0.05;
+      k.wigT += 0.045 * (0.55 + 0.85 * k.speedMul);
 
-      k.heading += k.turn + steer * 0.05;
-      k.x += Math.cos(k.heading) * k.speed;
-      k.y += Math.sin(k.heading) * k.speed;
+      /* stay out from fully under the wooden sign */
+      if (signZone) {
+        const m2 = k.len * 0.45;
+        if (k.x > signZone.x1 - m2 && k.x < signZone.x2 + m2 &&
+            k.y > signZone.y1 - m2 && k.y < signZone.y2 + m2) {
+          const zcx = (signZone.x1 + signZone.x2) / 2;
+          const zcy = (signZone.y1 + signZone.y2) / 2;
+          const away = Math.atan2(k.y - zcy, k.x - zcx);
+          k.heading += angleSteer(k.heading, away) * 0.14;
+          k.x += Math.cos(away) * 0.5;
+          k.y += Math.sin(away) * 0.5;
+        }
+      }
+
+      /* boundary steering — near any edge, steer toward the pond's center;
+         a single target angle means corners can't produce conflicting pulls */
+      const margin = k.len * 1.35;
+      let steer = 0;
+      const dxL = margin - k.x, dxR = k.x - (W - margin);
+      const dyT = margin - k.y, dyB = k.y - (H - margin);
+      const depth = Math.max(dxL, dxR, dyT, dyB) / margin;
+      if (depth > 0) {
+        const toCenter = Math.atan2(H / 2 - k.y, W / 2 - k.x);
+        steer = angleSteer(k.heading, toCenter) * (0.05 + 0.14 * Math.min(1, depth));
+      }
+
+      const wanderScale = feedPhase === 'feeding' ? 0.35 : 1;
+      k.heading += k.turn * wanderScale + steer + steerToward * gain;
+      k.x += Math.cos(k.heading) * k.speed * k.speedMul;
+      k.y += Math.sin(k.heading) * k.speed * k.speedMul;
 
       /* hard clamp as belt-and-braces (never off screen) */
       const pad = k.len * 0.6;
-      k.x = Math.min(Math.max(k.x, pad), W - pad);
-      k.y = Math.min(Math.max(k.y, pad), H - pad);
+      const cx2 = Math.min(Math.max(k.x, pad), W - pad);
+      const cy2 = Math.min(Math.max(k.y, pad), H - pad);
+      const pinnedX = cx2 !== k.x, pinnedY = cy2 !== k.y;
+      k.x = cx2; k.y = cy2;
+      /* pinned against a wall or wedged in a corner: turn hard toward center */
+      if (pinnedX || pinnedY) {
+        const out = Math.atan2(H / 2 - k.y, W / 2 - k.x);
+        k.heading += angleSteer(k.heading, out) * (pinnedX && pinnedY ? 0.3 : 0.12);
+      }
     }
 
     function angleSteer(current, target) {
@@ -1267,18 +1718,41 @@ var startPond = (function () {
       const k = koiAt(p.x, p.y);
       if (k) {
         ripples.push({ x: k.x, y: k.y, r: 4, vr: 0.8, a: 0.35 });
-        openModal(k.data);
+        showProfile(k);
       }
     });
 
-    /* --- modal --- */
-    const overlay = document.getElementById('modalOverlay');
+    /* --- docked profile card --- */
+    const dock = document.getElementById('profileDock');
+    const dockBackdrop = document.getElementById('dockBackdrop');
+    const pondWrapEl = document.querySelector('.pond-wrap');
+    const isNarrow = function () { return window.matchMedia('(max-width: 700px)').matches; };
     const mClose = document.getElementById('modalClose');
     const mRole = document.getElementById('modalRole');
     const mName = document.getElementById('modalName');
     const mTitle = document.getElementById('modalTitle');
     const mLink = document.getElementById('modalLink');
     const mNotes = document.getElementById('modalNotes');
+    const mOffers = document.getElementById('modalOffers');
+    const mNeeds = document.getElementById('modalNeeds');
+    const mOffersWrap = document.getElementById('modalOffersWrap');
+    const mNeedsWrap = document.getElementById('modalNeedsWrap');
+    const mTies = document.getElementById('modalTies');
+    const mTiesWrap = document.getElementById('modalTiesWrap');
+
+    function chipify(el, items, emptyText) {
+      el.innerHTML = '';
+      if (!items || !items.length) {
+        el.innerHTML = '<span class="m-none">' + emptyText + '</span>';
+        return;
+      }
+      items.forEach(function (it) {
+        const c = document.createElement('span');
+        c.className = 'chip2';
+        c.textContent = it;
+        el.appendChild(c);
+      });
+    }
 
     function openModal(a) {
       mRole.textContent = a.role;
@@ -1295,56 +1769,244 @@ var startPond = (function () {
         mLink.style.display = 'none';
       }
       mNotes.textContent = a.notes || '—';
-      overlay.classList.add('open');
+      chipify(mOffers, a.offers, 'nothing listed');
+      chipify(mNeeds, a.needs, 'nothing listed');
+      mTies.innerHTML = '';
+      if (a.ties && a.ties.length) {
+        a.ties.forEach(function (tn) {
+          const el = document.createElement('span');
+          el.className = 'tie-link';
+          el.textContent = tn;
+          el.addEventListener('click', function () {
+            const target = koiList.find(function (k) { return k.data.name === tn; });
+            if (target) {
+              ripples.push({ x: target.x, y: target.y, r: 4, vr: 0.8, a: 0.35 });
+              showProfile(target);
+            }
+          });
+          mTies.appendChild(el);
+        });
+      } else {
+        mTies.innerHTML = '<span class="m-none">no strong ties recorded</span>';
+      }
+      dock.classList.add('open');
+      if (isNarrow()) {
+        dockBackdrop.classList.add('show');
+      } else {
+        /* card straddles the pond bottom: reserve room below so it never
+           covers the legend */
+        requestAnimationFrame(function () {
+          pondWrapEl.style.marginBottom = Math.round(dock.offsetHeight * 0.7 + 30) + 'px';
+        });
+      }
     }
-    function closeModal() { overlay.classList.remove('open'); }
+
+    function showProfile(k) {
+      lockedKoi = k;
+      openModal(k.data);
+    }
+
+    function closeModal() {
+      dock.classList.remove('open');
+      dockBackdrop.classList.remove('show');
+      pondWrapEl.style.marginBottom = '';
+      lockedKoi = null;
+    }
     mClose.addEventListener('click', closeModal);
-    overlay.addEventListener('click', function (e) { if (e.target === overlay) closeModal(); });
+    dockBackdrop.addEventListener('click', closeModal);
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
 
-    /* --- hover name label --- */
-    function drawNameLabel(k) {
-      const name = k.data.name;
-      ctx.save();
-      ctx.font = '600 13px "Zen Kaku Gothic New", "Helvetica Neue", Arial, sans-serif';
-      const tw = ctx.measureText(name).width;
-      const padX = 12, h = 26;
-      const w = tw + padX * 2;
-      let lx = k.x - w / 2;
-      let ly = k.y - k.len * 0.85 - h - 6;
-      /* keep label inside the pond */
-      lx = Math.min(Math.max(lx, 8), W - w - 8);
-      if (ly < 8) ly = k.y + k.len * 0.85 + 6;
+    /* --- pellet physics + drawing --- */
+    function startFeeding() {
+      feedPhase = 'feeding';
+      feedStartAt = performance.now();
+      pellets = [];
+      const cx = W / 2, cy = H / 2;
+      const n = 24 + Math.min(26, Math.floor(koiList.length / 3));
+      for (let i = 0; i < n; i++) {
+        pellets.push({
+          x: cx + (Math.random() - 0.5) * Math.min(230, W * 0.28),
+          y: cy + (Math.random() - 0.5) * Math.min(170, H * 0.36),
+          z: 130 + Math.random() * 90,       /* height above the water */
+          vz: 0,
+          vx: (Math.random() - 0.5) * 0.5,
+          delay: feedStartAt + i * 34 + Math.random() * 60,
+          size: 2.6 + Math.random() * 1.3,
+          bob: Math.random() * Math.PI * 2,
+          alpha: 1,
+          landed: false,
+          alive: true,
+          sinking: false
+        });
+      }
+    }
 
+    function updateAndDrawPellets(t) {
+      if (!pellets.length) return;
+      for (const p of pellets) {
+        if (!p.alive) continue;
+        if (t < p.delay) continue;
+        if (!p.landed) {
+          /* falling: simple gravity on height */
+          p.vz += 0.34;
+          p.z -= p.vz;
+          p.x += p.vx;
+          if (p.z <= 0) {
+            p.z = 0;
+            p.landed = true;
+            /* splash: two staggered rings */
+            if (ripples.length < 60) {
+              ripples.push({ x: p.x, y: p.y, r: 1.5, vr: 0.85, a: 0.34 });
+              ripples.push({ x: p.x, y: p.y, r: 5, vr: 0.5, a: 0.18 });
+            }
+          }
+        } else {
+          /* floating: gentle bob + drift */
+          p.bob += 0.05;
+          p.x += p.vx * 0.25;
+          if (p.sinking) {
+            p.alpha -= 0.02;
+            p.size *= 0.985;
+            if (p.alpha <= 0) { p.alive = false; continue; }
+          }
+        }
+        /* draw */
+        ctx.save();
+        if (!p.landed) {
+          /* shadow on the water while airborne */
+          ctx.globalAlpha = Math.max(0, 0.16 * (1 - p.z / 240));
+          ctx.fillStyle = '#000';
+          ctx.beginPath();
+          ctx.ellipse(p.x, p.y, p.size * 1.1, p.size * 0.7, 0, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        const py = p.landed ? p.y + Math.sin(p.bob) * 1.1 : p.y - p.z * 0.62;
+        ctx.globalAlpha = Math.max(0, p.alpha);
+        ctx.fillStyle = '#d9a05a';
+        ctx.beginPath();
+        ctx.arc(p.x, py, p.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = Math.max(0, p.alpha * 0.55);
+        ctx.strokeStyle = '#8a5a24';
+        ctx.lineWidth = 0.8;
+        ctx.stroke();
+        ctx.globalAlpha = Math.max(0, p.alpha * 0.6);
+        ctx.fillStyle = '#f4d9a8';
+        ctx.beginPath();
+        ctx.arc(p.x - p.size * 0.3, py - p.size * 0.3, p.size * 0.32, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    function stepFeedingLifecycle(t) {
+      if (feedPhase === 'feeding') {
+        const anyAlive = pellets.some(function (p) { return p.alive; });
+        const elapsed = t - feedStartAt;
+        if (elapsed > 9500) {
+          /* failsafe: whatever's left slowly sinks */
+          for (const p of pellets) if (p.alive) p.sinking = true;
+        }
+        if (!anyAlive || elapsed > 12000) {
+          feedPhase = 'disperse';
+          disperseUntil = t + 1500;
+          for (const k of koiList) {
+            const away = Math.atan2(k.y - H / 2, k.x - W / 2);
+            k.disperseHeading = away + (Math.random() - 0.5) * 1.2;
+          }
+        }
+      } else if (feedPhase === 'disperse') {
+        if (t > disperseUntil) {
+          feedPhase = 'idle';
+          pellets = [];
+          showFeedToast();
+        }
+      }
+    }
+
+    /* --- feedback form + toast --- */
+    const feedForm = document.getElementById('feedForm');
+    const feedInput = document.getElementById('feedInput');
+    const feedBtn = document.getElementById('feedBtn');
+    const feedToast = document.getElementById('feedToast');
+    let toastTimer = null;
+
+    feedForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const text = feedInput.value.trim();
+      if (!text) {
+        feedInput.classList.add('shake');
+        setTimeout(function () { feedInput.classList.remove('shake'); }, 450);
+        feedInput.focus();
+        return;
+      }
+      if (feedPhase !== 'idle') return;
+      feedInput.disabled = true;
+      feedBtn.disabled = true;
+      feedToast.classList.remove('show');
+      emailStatus = 'pending';
+      /* send the feedback email (FormSubmit relay -> info@forgranted.com) */
+      fetch('https://formsubmit.co/ajax/info@forgranted.com', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          _subject: 'Koi Pond feedback - OpenCLE Recap',
+          feedback: text,
+          page: location.href
+        })
+      }).then(function (r) {
+        emailStatus = r.ok ? 'ok' : 'failed';
+      }).catch(function () {
+        emailStatus = 'failed';
+      });
+      startFeeding();
+    });
+
+    function showFeedToast() {
+      let html = 'Thank you for sharing your feedback! Your thoughts and reflections feed the Koi-mmunity and help it grow!';
+      if (emailStatus === 'failed') {
+        html += '<small>(One hiccup: our mail service could not be reached, so your note may not have gone through - you can always email info@forgranted.com directly.)</small>';
+      }
+      feedToast.innerHTML = html;
+      feedToast.classList.add('show');
+      feedInput.value = '';
+      feedInput.disabled = false;
+      feedBtn.disabled = false;
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function () { feedToast.classList.remove('show'); }, 9000);
+    }
+
+    /* --- hover name tip (DOM, so it rides above the sign/toast/dock) --- */
+    const koiTip = document.getElementById('koiTip');
+    function updateKoiTip() {
+      if (!hoverKoi) { koiTip.style.display = 'none'; return; }
+      const k = hoverKoi;
       const style = ROLE_STYLE[k.data.role] || ROLE_STYLE['Know-er'];
-      ctx.fillStyle = 'rgba(8, 10, 12, 0.86)';
-      ctx.strokeStyle = style.glow;
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      const r = h / 2;
-      ctx.moveTo(lx + r, ly);
-      ctx.arcTo(lx + w, ly, lx + w, ly + h, r);
-      ctx.arcTo(lx + w, ly + h, lx, ly + h, r);
-      ctx.arcTo(lx, ly + h, lx, ly, r);
-      ctx.arcTo(lx, ly, lx + w, ly, r);
-      ctx.closePath();
-      ctx.fill();
-      ctx.stroke();
-
-      ctx.fillStyle = '#f2f0ee';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(name, lx + padX, ly + h / 2 + 1);
-      ctx.restore();
+      koiTip.textContent = k.data.name;
+      koiTip.style.borderColor = style.glow;
+      koiTip.style.display = 'block';
+      /* position above the koi, clamped to the pond area */
+      const tw = koiTip.offsetWidth, th = koiTip.offsetHeight;
+      let lx = k.x;
+      let ly = k.y - k.len * 0.85 - th - 8;
+      lx = Math.min(Math.max(lx, tw / 2 + 6), W - tw / 2 - 6);
+      if (ly < -30) ly = k.y + k.len * 0.85 + 8;
+      koiTip.style.left = lx + 'px';
+      koiTip.style.top = ly + 'px';
     }
 
     /* --- main loop --- */
     function frame(t) {
       drawWater(t);
+      drawTies(t);
+      updateAndDrawPellets(t);
       for (const k of koiList) {
         stepKoi(k);
-        drawKoi(k, t, k === hoverKoi);
+        drawKoi(k, t, k === hoverKoi || k === lockedKoi);
       }
-      if (hoverKoi) drawNameLabel(hoverKoi);
+      drawLilies(t);
+      updateKoiTip();
+      stepFeedingLifecycle(t);
       requestAnimationFrame(frame);
     }
 
@@ -1355,15 +2017,25 @@ var startPond = (function () {
       resize();
       /* keep koi proportionally placed on resize */
       if (oldW && oldH) {
+        const L = koiLength(ATTENDEES.length);
         for (const k of koiList) {
           k.x = k.x / oldW * W;
           k.y = k.y / oldH * H;
+          k.len = L * k.lenVar;
         }
       }
     });
     requestAnimationFrame(frame);
   };
 })();
+
+/* clear reveal animations once done so their retained transforms don't
+   break fixed-position children (mobile profile card) */
+document.addEventListener('animationend', function (e) {
+  if (e.target.classList && e.target.classList.contains('reveal-in')) {
+    e.target.classList.add('reveal-done');
+  }
+});
 
 /* hero drifting petals — a handful, tasteful */
 (function () {
