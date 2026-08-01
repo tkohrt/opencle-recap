@@ -562,8 +562,51 @@
     transition: opacity 0.7s ease, transform 0.7s ease;
     box-shadow: 0 12px 34px rgba(0,0,0,0.45);
   }
-  .feed-toast.show { opacity: 1; transform: translate(-50%, 0); }
+  .feed-toast.show { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
   .feed-toast small { display: block; margin-top: 0.4rem; color: #6d5a3a; }
+  .feed-toast .toast-close {
+    position: absolute;
+    top: 6px; right: 10px;
+    background: none; border: none;
+    font-family: var(--sans);
+    font-size: 1.15rem;
+    line-height: 1;
+    color: #8a744c;
+    cursor: pointer;
+    padding: 4px;
+  }
+  .feed-toast .toast-close:hover { color: #2a2118; }
+  .feed-toast .toast-grow {
+    display: block;
+    margin-top: 0.55rem;
+    font-size: 0.85rem;
+    color: #56482f;
+  }
+  .feed-toast .toast-cta {
+    display: inline-block;
+    margin-top: 0.75rem;
+    background: var(--pink);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.86rem;
+    letter-spacing: 0.03em;
+    padding: 0.5em 1.2em;
+    border-radius: 999px;
+    box-shadow: 0 4px 14px rgba(255, 61, 158, 0.35);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .feed-toast .toast-cta:hover { transform: scale(1.04); box-shadow: 0 4px 20px rgba(255, 61, 158, 0.55); }
+  .pond-form-link {
+    margin-top: 0.55rem;
+    font-size: 0.82rem;
+  }
+  .pond-form-link a {
+    color: var(--pink-soft);
+    text-decoration: none;
+    border-bottom: 1px dashed rgba(255, 199, 221, 0.4);
+  }
+  .pond-form-link a:hover { color: var(--pink); }
   @media (max-width: 620px) {
     .feed-station { top: -14px; left: 12px; right: 12px; flex-direction: column; gap: 0; }
     .wood-sign { padding: 0.5rem 0.85rem 0.55rem; align-self: flex-start; }
@@ -942,6 +985,7 @@
         <span><span class="chip chip-know"></span>Know-er / Attendee</span>
       </div>
       <p class="pond-note">Every koi is a person who was in the room. Click one to say hello.</p>
+      <p class="pond-form-link">Want a more detailed koi? <a href="https://forms.gle/ScRDiiTmjLv1qpFL8" target="_blank" rel="noopener">Complete our feedback form &rarr;</a> and we'll add your LinkedIn and responses to your profile card.</p>
     </section>
 
     <!-- ================= QUOTE ================= -->
@@ -1964,7 +2008,6 @@ var startPond = (function () {
     const feedInput = document.getElementById('feedInput');
     const feedBtn = document.getElementById('feedBtn');
     const feedToast = document.getElementById('feedToast');
-    let toastTimer = null;
 
     feedForm.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -1998,17 +2041,21 @@ var startPond = (function () {
     });
 
     function showFeedToast() {
-      let html = 'Thank you for sharing your feedback! Your thoughts and reflections feed the Koi-mmunity and help it grow!';
+      let html = '<button class="toast-close" type="button" aria-label="Close">&times;</button>';
+      html += 'Thank you for sharing your feedback! Your thoughts and reflections feed the Koi-mmunity and help it grow!';
+      html += '<br><span class="toast-grow">Want to grow your koi? Complete our feedback form and we will add your LinkedIn and your responses to your koi\'s profile card - a more detailed koi is easier for the community to find, connect, and match with.</span>';
       if (emailStatus === 'failed') {
         html += '<small>(One hiccup: our mail service could not be reached, so your note may not have gone through - you can always email info@forgranted.com directly.)</small>';
       }
+      html += '<br><a class="toast-cta" href="https://forms.gle/ScRDiiTmjLv1qpFL8" target="_blank" rel="noopener">Grow your koi - complete the form &rarr;</a>';
       feedToast.innerHTML = html;
       feedToast.classList.add('show');
+      feedToast.querySelector('.toast-close').addEventListener('click', function () {
+        feedToast.classList.remove('show');
+      });
       feedInput.value = '';
       feedInput.disabled = false;
       feedBtn.disabled = false;
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(function () { feedToast.classList.remove('show'); }, 9000);
     }
 
     /* --- hover name tip (DOM, so it rides above the sign/toast/dock) --- */
